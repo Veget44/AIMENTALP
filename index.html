@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mental performance app — concept prototype</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="top-bar">
+    <span class="top-bar-title">concept prototype</span>
+    <button id="lang-toggle" class="lang-toggle" aria-label="switch language">EN / 한국어</button>
+  </div>
+
+  <main class="phone-frame">
+
+    <!-- SCREEN 1: onboarding -->
+    <section id="screen-onboarding" class="screen active">
+      <div class="icon-circle"><i class="ti ti-brain"></i></div>
+      <h1 data-i18n="onboarding.title"></h1>
+      <p class="subtext" data-i18n="onboarding.subtext"></p>
+
+      <div class="option-list">
+        <div class="option selected" data-value="sport">
+          <i class="ti ti-ball-football"></i>
+          <span data-i18n="onboarding.option_sport"></span>
+          <i class="ti ti-check check-icon"></i>
+        </div>
+        <div class="option selected" data-value="esports">
+          <i class="ti ti-device-gamepad-2"></i>
+          <span data-i18n="onboarding.option_esports"></span>
+          <i class="ti ti-check check-icon"></i>
+        </div>
+        <div class="option" data-value="performing">
+          <i class="ti ti-microphone-2"></i>
+          <span data-i18n="onboarding.option_performing"></span>
+        </div>
+        <div class="option" data-value="other">
+          <i class="ti ti-dots"></i>
+          <span data-i18n="onboarding.option_other"></span>
+        </div>
+      </div>
+
+      <button class="primary-button" id="btn-to-home" data-i18n="onboarding.continue"></button>
+    </section>
+
+    <!-- SCREEN 2: unified home / daily check-in -->
+    <section id="screen-home" class="screen">
+      <div class="row-between">
+        <div class="row-gap">
+          <div class="icon-circle small"><i class="ti ti-brain"></i></div>
+          <div>
+            <p class="title-sm" data-i18n="home.header_title"></p>
+            <p class="muted-xs" data-i18n="home.header_subtitle"></p>
+          </div>
+        </div>
+        <span class="streak-badge"><i class="ti ti-flame"></i> <span data-i18n="home.streak"></span></span>
+      </div>
+
+      <div class="card">
+        <div class="row-between">
+          <span class="level-label" data-i18n="home.level"></span>
+          <span class="muted-xs" data-i18n="home.xp"></span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:60%"></div></div>
+      </div>
+
+      <p class="section-label" data-i18n="home.mood_question"></p>
+      <div class="mood-row">
+        <span class="mood-pill selected" data-i18n="home.mood_calm"></span>
+        <span class="mood-pill" data-i18n="home.mood_tense"></span>
+        <span class="mood-pill" data-i18n="home.mood_tired"></span>
+        <span class="mood-pill" data-i18n="home.mood_low"></span>
+      </div>
+
+      <div class="card">
+        <div class="row-between muted-xs" style="margin-bottom:8px;">
+          <span data-i18n="home.selftalk_label"></span>
+          <span class="xp-tag" data-i18n="home.selftalk_xp"></span>
+        </div>
+        <p class="selftalk-line" data-i18n="home.selftalk_line"></p>
+        <div class="row-gap">
+          <button class="secondary-button" data-i18n="home.try_another"></button>
+          <button class="secondary-button" id="btn-to-summary" data-i18n="home.this_helped"></button>
+        </div>
+      </div>
+
+      <div class="card row-between">
+        <div class="row-gap">
+          <i class="ti ti-users"></i>
+          <span class="muted-sm" data-i18n="home.community"></span>
+        </div>
+        <i class="ti ti-chevron-right muted-icon"></i>
+      </div>
+    </section>
+
+    <!-- SCREEN 3: post-session summary -->
+    <section id="screen-summary" class="screen">
+      <div class="center-col">
+        <div class="icon-circle success"><i class="ti ti-check"></i></div>
+        <p class="title-md" data-i18n="summary.title"></p>
+        <p class="muted-xs" data-i18n="summary.subtitle"></p>
+      </div>
+
+      <div class="row-gap stretch">
+        <div class="card center-col flex1">
+          <p class="stat-number accent" data-i18n="summary.xp_value"></p>
+          <p class="muted-xs" data-i18n="summary.xp_label"></p>
+        </div>
+        <div class="card center-col flex1">
+          <p class="stat-number" data-i18n="summary.streak_value"></p>
+          <p class="muted-xs" data-i18n="summary.streak_label"></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="section-label" data-i18n="summary.mood_shift_label"></p>
+        <div class="row-between" style="align-items:center;">
+          <div class="center-col">
+            <p class="muted-xs" data-i18n="summary.before_label"></p>
+            <p class="bold-sm" data-i18n="summary.before_value"></p>
+          </div>
+          <i class="ti ti-arrow-right muted-icon"></i>
+          <div class="center-col">
+            <p class="muted-xs" data-i18n="summary.after_label"></p>
+            <p class="bold-sm accent-success" data-i18n="summary.after_value"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="row-between muted-xs" style="margin-bottom:8px;">
+          <span data-i18n="summary.badge_label"></span>
+          <span data-i18n="summary.badge_remaining"></span>
+        </div>
+        <div class="progress-track"><div class="progress-fill warning" style="width:85%"></div></div>
+      </div>
+
+      <button class="primary-button" id="btn-restart"><i class="ti ti-users"></i> <span data-i18n="summary.share_button"></span></button>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
