@@ -87,6 +87,41 @@
         </div>
       </div>
 
+      <!-- PICK-STYLE SELF-TALK: pre-match mindset select, esports-inspired -->
+      <div class="card">
+        <div class="row-between muted-xs" style="margin-bottom:2px;">
+          <span data-i18n="home.pick_label"></span>
+          <span class="xp-tag" data-i18n="home.pick_xp"></span>
+        </div>
+        <p class="muted-xs" style="margin-bottom:10px;" data-i18n="home.pick_hint"></p>
+
+        <div class="archetype-grid" id="archetype-grid">
+          <button class="archetype-chip" data-archetype="warrior">
+            <i class="ti ti-sword"></i>
+            <span data-i18n="home.archetypes.warrior.name"></span>
+          </button>
+          <button class="archetype-chip" data-archetype="guardian">
+            <i class="ti ti-shield"></i>
+            <span data-i18n="home.archetypes.guardian.name"></span>
+          </button>
+          <button class="archetype-chip" data-archetype="trickster">
+            <i class="ti ti-chess-knight"></i>
+            <span data-i18n="home.archetypes.trickster.name"></span>
+          </button>
+          <button class="archetype-chip" data-archetype="phoenix">
+            <i class="ti ti-feather"></i>
+            <span data-i18n="home.archetypes.phoenix.name"></span>
+          </button>
+        </div>
+
+        <div id="archetype-result" class="archetype-result hidden">
+          <p class="reframe-before" id="archetype-before"></p>
+          <div class="reframe-arrow"><i class="ti ti-arrow-down"></i></div>
+          <p class="reframe-after" id="archetype-after"></p>
+        </div>
+        <p class="muted-xs archetype-placeholder" id="archetype-placeholder" data-i18n="home.pick_placeholder"></p>
+      </div>
+
       <div class="card row-between">
         <div class="row-gap">
           <i class="ti ti-users"></i>
