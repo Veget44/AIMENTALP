@@ -179,3 +179,34 @@ h1 {
 
 .stat-number { font-size: 18px; font-weight: 600; margin: 0; }
 .stat-number.accent { color: var(--accent-text); }
+
+/* Pick-style self-talk (esports champion-select-inspired mindset picker) */
+.archetype-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 4px; }
+.archetype-chip {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 10px 2px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--surface-card);
+  color: var(--text-secondary); font-size: 10px; cursor: pointer;
+}
+.archetype-chip i { font-size: 17px; }
+.archetype-chip:hover { border-color: var(--border-accent); }
+.archetype-chip.selected {
+  border-color: var(--border-accent); border-width: 1.5px;
+  background: var(--accent-bg); color: var(--accent-text); font-weight: 600;
+}
+
+.archetype-result { margin-top: 12px; }
+.archetype-result.hidden { display: none; }
+.archetype-placeholder { text-align: center; margin: 12px 0 0; }
+.archetype-placeholder.hidden { display: none; }
+
+.reframe-before {
+  font-size: 12px; color: var(--text-muted); text-decoration: line-through;
+  text-align: center; margin: 0;
+}
+.reframe-arrow { text-align: center; color: var(--text-muted); font-size: 14px; margin: 2px 0; }
+.reframe-after {
+  font-family: Georgia, "Noto Serif KR", serif;
+  font-size: 14px; line-height: 1.5; text-align: center;
+  color: var(--accent-text); font-weight: 600; margin: 0;
+}
