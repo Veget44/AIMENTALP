@@ -4,13 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mental performance app — concept prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/dist/tabler-icons.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="top-bar">
-    <span class="top-bar-title">concept prototype</span>
+  <div class="hud-topbar">
+    <div class="hud-topbar-label"><span class="live-dot"></span><span data-i18n="meta.top_label"></span></div>
     <button id="lang-toggle" class="lang-toggle" aria-label="switch language">EN / 한국어</button>
   </div>
 
@@ -18,10 +21,11 @@
 
     <!-- SCREEN 1: onboarding -->
     <section id="screen-onboarding" class="screen active">
-      <div class="icon-circle"><i class="ti ti-brain"></i></div>
+      <div class="panel-eyebrow" data-i18n="onboarding.eyebrow"></div>
       <h1 data-i18n="onboarding.title"></h1>
       <p class="subtext" data-i18n="onboarding.subtext"></p>
 
+      <p class="section-label" data-i18n="onboarding.arena_label"></p>
       <div class="option-list">
         <div class="option selected" data-value="sport">
           <i class="ti ti-ball-football"></i>
@@ -37,10 +41,34 @@
           <i class="ti ti-microphone-2"></i>
           <span data-i18n="onboarding.option_performing"></span>
         </div>
+        <div class="option" data-value="coaching">
+          <i class="ti ti-clipboard-list"></i>
+          <span data-i18n="onboarding.option_coaching"></span>
+        </div>
         <div class="option" data-value="other">
           <i class="ti ti-dots"></i>
           <span data-i18n="onboarding.option_other"></span>
         </div>
+      </div>
+
+      <p class="section-label" data-i18n="onboarding.goal_label"></p>
+      <div class="chip-grid">
+        <button class="chip-tile selected" data-value="focus">
+          <i class="ti ti-target-arrow"></i>
+          <span data-i18n="onboarding.goal_focus"></span>
+        </button>
+        <button class="chip-tile" data-value="confidence">
+          <i class="ti ti-mood-smile"></i>
+          <span data-i18n="onboarding.goal_confidence"></span>
+        </button>
+        <button class="chip-tile" data-value="reset">
+          <i class="ti ti-refresh"></i>
+          <span data-i18n="onboarding.goal_reset"></span>
+        </button>
+        <button class="chip-tile" data-value="routine">
+          <i class="ti ti-repeat"></i>
+          <span data-i18n="onboarding.goal_routine"></span>
+        </button>
       </div>
 
       <button class="primary-button" id="btn-to-home" data-i18n="onboarding.continue"></button>
@@ -48,9 +76,10 @@
 
     <!-- SCREEN 2: unified home / daily check-in -->
     <section id="screen-home" class="screen">
-      <div class="row-between">
+
+      <div class="hud-header panel-cut">
         <div class="row-gap">
-          <div class="icon-circle small"><i class="ti ti-brain"></i></div>
+          <div class="icon-tile"><i class="ti ti-brain"></i></div>
           <div>
             <p class="title-sm" data-i18n="home.header_title"></p>
             <p class="muted-xs" data-i18n="home.header_subtitle"></p>
@@ -59,59 +88,56 @@
         <span class="streak-badge"><i class="ti ti-flame"></i> <span data-i18n="home.streak"></span></span>
       </div>
 
-      <div class="card">
+      <div class="card panel-cut accent-mint">
         <div class="row-between">
           <span class="level-label" data-i18n="home.level"></span>
-          <span class="muted-xs" data-i18n="home.xp"></span>
+          <span class="mono-tag" data-i18n="home.xp"></span>
         </div>
-        <div class="progress-track"><div class="progress-fill" style="width:60%"></div></div>
+        <div class="progress-track segmented"><div class="progress-fill" style="width:60%"></div></div>
       </div>
 
       <p class="section-label" data-i18n="home.mood_question"></p>
-      <div class="mood-row">
-        <span class="mood-pill selected" data-i18n="home.mood_calm"></span>
-        <span class="mood-pill" data-i18n="home.mood_tense"></span>
-        <span class="mood-pill" data-i18n="home.mood_tired"></span>
-        <span class="mood-pill" data-i18n="home.mood_low"></span>
+      <div class="mood-grid">
+        <button class="mood-tile selected" data-mood="calm"><i class="ti ti-mood-smile-beam"></i><span data-i18n="home.moods.calm"></span></button>
+        <button class="mood-tile" data-mood="focused"><i class="ti ti-target-arrow"></i><span data-i18n="home.moods.focused"></span></button>
+        <button class="mood-tile" data-mood="tense"><i class="ti ti-bolt"></i><span data-i18n="home.moods.tense"></span></button>
+        <button class="mood-tile" data-mood="tired"><i class="ti ti-battery-2"></i><span data-i18n="home.moods.tired"></span></button>
+        <button class="mood-tile" data-mood="low"><i class="ti ti-cloud-rain"></i><span data-i18n="home.moods.low"></span></button>
+        <button class="mood-tile" data-mood="wired"><i class="ti ti-activity"></i><span data-i18n="home.moods.wired"></span></button>
       </div>
 
-      <div class="card">
-        <div class="row-between muted-xs" style="margin-bottom:8px;">
-          <span data-i18n="home.selftalk_label"></span>
-          <span class="xp-tag" data-i18n="home.selftalk_xp"></span>
+      <div class="card panel-cut accent-amber">
+        <div class="row-between muted-xs" style="margin-bottom:10px;">
+          <span data-i18n="home.selftalk.label"></span>
+          <span class="mono-tag amber" data-i18n="home.selftalk.xp_tag"></span>
         </div>
-        <p class="selftalk-line" data-i18n="home.selftalk_line"></p>
+        <div class="phase-tabs" id="phase-tabs">
+          <button class="phase-tab selected" data-phase="pre" data-i18n="home.selftalk.tabs.pre"></button>
+          <button class="phase-tab" data-phase="mid" data-i18n="home.selftalk.tabs.mid"></button>
+          <button class="phase-tab" data-phase="recovery" data-i18n="home.selftalk.tabs.recovery"></button>
+        </div>
+        <p class="selftalk-line" id="selftalk-line"></p>
         <div class="row-gap">
-          <button class="secondary-button" data-i18n="home.try_another"></button>
+          <button class="secondary-button" id="btn-try-another" data-i18n="home.try_another"></button>
           <button class="secondary-button" id="btn-to-summary" data-i18n="home.this_helped"></button>
         </div>
       </div>
 
       <!-- PICK-STYLE SELF-TALK: pre-match mindset select, esports-inspired -->
-      <div class="card">
+      <div class="card panel-cut accent-violet">
         <div class="row-between muted-xs" style="margin-bottom:2px;">
           <span data-i18n="home.pick_label"></span>
-          <span class="xp-tag" data-i18n="home.pick_xp"></span>
+          <span class="mono-tag violet" data-i18n="home.pick_xp"></span>
         </div>
         <p class="muted-xs" style="margin-bottom:10px;" data-i18n="home.pick_hint"></p>
 
         <div class="archetype-grid" id="archetype-grid">
-          <button class="archetype-chip" data-archetype="warrior">
-            <i class="ti ti-sword"></i>
-            <span data-i18n="home.archetypes.warrior.name"></span>
-          </button>
-          <button class="archetype-chip" data-archetype="guardian">
-            <i class="ti ti-shield"></i>
-            <span data-i18n="home.archetypes.guardian.name"></span>
-          </button>
-          <button class="archetype-chip" data-archetype="trickster">
-            <i class="ti ti-chess-knight"></i>
-            <span data-i18n="home.archetypes.trickster.name"></span>
-          </button>
-          <button class="archetype-chip" data-archetype="phoenix">
-            <i class="ti ti-feather"></i>
-            <span data-i18n="home.archetypes.phoenix.name"></span>
-          </button>
+          <button class="archetype-chip" data-archetype="warrior"><i class="ti ti-sword"></i><span data-i18n="home.archetypes.warrior.name"></span></button>
+          <button class="archetype-chip" data-archetype="guardian"><i class="ti ti-shield"></i><span data-i18n="home.archetypes.guardian.name"></span></button>
+          <button class="archetype-chip" data-archetype="trickster"><i class="ti ti-chess-knight"></i><span data-i18n="home.archetypes.trickster.name"></span></button>
+          <button class="archetype-chip" data-archetype="phoenix"><i class="ti ti-feather"></i><span data-i18n="home.archetypes.phoenix.name"></span></button>
+          <button class="archetype-chip" data-archetype="scout"><i class="ti ti-binoculars"></i><span data-i18n="home.archetypes.scout.name"></span></button>
+          <button class="archetype-chip" data-archetype="anchor"><i class="ti ti-anchor"></i><span data-i18n="home.archetypes.anchor.name"></span></button>
         </div>
 
         <div id="archetype-result" class="archetype-result hidden">
@@ -122,35 +148,71 @@
         <p class="muted-xs archetype-placeholder" id="archetype-placeholder" data-i18n="home.pick_placeholder"></p>
       </div>
 
-      <div class="card row-between">
-        <div class="row-gap">
-          <i class="ti ti-users"></i>
-          <span class="muted-sm" data-i18n="home.community"></span>
+      <div class="card panel-cut">
+        <p class="section-label" data-i18n="home.checklist_label"></p>
+        <div class="checklist">
+          <label class="checklist-item">
+            <input type="checkbox" checked>
+            <span class="check-box"><i class="ti ti-check"></i></span>
+            <span data-i18n="home.checklist_items.0"></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span class="check-box"><i class="ti ti-check"></i></span>
+            <span data-i18n="home.checklist_items.1"></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span class="check-box"><i class="ti ti-check"></i></span>
+            <span data-i18n="home.checklist_items.2"></span>
+          </label>
         </div>
-        <i class="ti ti-chevron-right muted-icon"></i>
+      </div>
+
+      <div class="card panel-cut">
+        <div class="row-between" style="margin-bottom:8px;">
+          <span class="section-label" style="margin:0;" data-i18n="home.community_label"></span>
+          <i class="ti ti-chevron-right muted-icon"></i>
+        </div>
+        <div class="leaderboard-row">
+          <span class="lb-rank">1</span>
+          <span class="lb-name" data-i18n="home.community_rows.0.name"></span>
+          <span class="mono-tag" data-i18n="home.community_rows.0.streak"></span>
+        </div>
+        <div class="leaderboard-row">
+          <span class="lb-rank">2</span>
+          <span class="lb-name" data-i18n="home.community_rows.1.name"></span>
+          <span class="mono-tag" data-i18n="home.community_rows.1.streak"></span>
+        </div>
+        <div class="leaderboard-row">
+          <span class="lb-rank">3</span>
+          <span class="lb-name" data-i18n="home.community_rows.2.name"></span>
+          <span class="mono-tag" data-i18n="home.community_rows.2.streak"></span>
+        </div>
+        <p class="muted-xs" style="margin:10px 0 0;" data-i18n="home.community_footer"></p>
       </div>
     </section>
 
     <!-- SCREEN 3: post-session summary -->
     <section id="screen-summary" class="screen">
       <div class="center-col">
-        <div class="icon-circle success"><i class="ti ti-check"></i></div>
+        <div class="icon-tile success"><i class="ti ti-check"></i></div>
         <p class="title-md" data-i18n="summary.title"></p>
         <p class="muted-xs" data-i18n="summary.subtitle"></p>
       </div>
 
       <div class="row-gap stretch">
-        <div class="card center-col flex1">
+        <div class="card panel-cut center-col flex1">
           <p class="stat-number accent" data-i18n="summary.xp_value"></p>
           <p class="muted-xs" data-i18n="summary.xp_label"></p>
         </div>
-        <div class="card center-col flex1">
+        <div class="card panel-cut center-col flex1">
           <p class="stat-number" data-i18n="summary.streak_value"></p>
           <p class="muted-xs" data-i18n="summary.streak_label"></p>
         </div>
       </div>
 
-      <div class="card">
+      <div class="card panel-cut">
         <p class="section-label" data-i18n="summary.mood_shift_label"></p>
         <div class="row-between" style="align-items:center;">
           <div class="center-col">
@@ -165,12 +227,39 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="row-between muted-xs" style="margin-bottom:8px;">
-          <span data-i18n="summary.badge_label"></span>
+      <div class="card panel-cut">
+        <p class="section-label" data-i18n="summary.week_label"></p>
+        <div class="week-bars">
+          <div class="week-bar-col"><div class="week-bar" style="height:30%"></div><span class="week-day" data-i18n="summary.days.0"></span></div>
+          <div class="week-bar-col"><div class="week-bar" style="height:55%"></div><span class="week-day" data-i18n="summary.days.1"></span></div>
+          <div class="week-bar-col"><div class="week-bar" style="height:40%"></div><span class="week-day" data-i18n="summary.days.2"></span></div>
+          <div class="week-bar-col"><div class="week-bar active" style="height:80%"></div><span class="week-day" data-i18n="summary.days.3"></span></div>
+          <div class="week-bar-col"><div class="week-bar" style="height:65%"></div><span class="week-day" data-i18n="summary.days.4"></span></div>
+          <div class="week-bar-col"><div class="week-bar" style="height:20%"></div><span class="week-day" data-i18n="summary.days.5"></span></div>
+          <div class="week-bar-col"><div class="week-bar today" style="height:95%"></div><span class="week-day" data-i18n="summary.days.6"></span></div>
+        </div>
+      </div>
+
+      <div class="card panel-cut">
+        <p class="section-label" data-i18n="summary.badges_label"></p>
+        <div class="badge-row">
+          <div class="badge-tile unlocked">
+            <i class="ti ti-medal"></i>
+            <span data-i18n="summary.badges.steady"></span>
+          </div>
+          <div class="badge-tile">
+            <i class="ti ti-lock"></i>
+            <span data-i18n="summary.badges.comeback"></span>
+          </div>
+          <div class="badge-tile">
+            <i class="ti ti-lock"></i>
+            <span data-i18n="summary.badges.routine"></span>
+          </div>
+        </div>
+        <div class="row-between muted-xs" style="margin:12px 0 6px;">
           <span data-i18n="summary.badge_remaining"></span>
         </div>
-        <div class="progress-track"><div class="progress-fill warning" style="width:85%"></div></div>
+        <div class="progress-track segmented"><div class="progress-fill warning" style="width:85%"></div></div>
       </div>
 
       <button class="primary-button" id="btn-restart"><i class="ti ti-users"></i> <span data-i18n="summary.share_button"></span></button>
