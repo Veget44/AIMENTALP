@@ -27,6 +27,32 @@ const translations = {
       selftalk_line: "\u201cOne bad round doesn't decide the match. Reset, next round.\u201d",
       try_another: "try another",
       this_helped: "this helped · claim xp",
+      pick_label: "pick your mindset · pre-match",
+      pick_xp: "+15 xp",
+      pick_hint: "Like a champion pick — choose the mindset you need right now.",
+      pick_placeholder: "Pick one above to see your reframe.",
+      archetypes: {
+        warrior: {
+          name: "warrior",
+          before: "\u201cI already threw the last fight.\u201d",
+          after: "\u201cThe last fight is over. This one hasn't started \u2014 I show up for it.\u201d",
+        },
+        guardian: {
+          name: "guardian",
+          before: "\u201cMy shield cracked, I'm exposed now.\u201d",
+          after: "\u201cA crack isn't a break. I hold the line anyway.\u201d",
+        },
+        trickster: {
+          name: "trickster",
+          before: "\u201cThey read my last move, I'm predictable.\u201d",
+          after: "\u201cOne read isn't a pattern. I adapt faster than they can punish.\u201d",
+        },
+        phoenix: {
+          name: "phoenix",
+          before: "\u201cI'm burned out, there's nothing left.\u201d",
+          after: "\u201cBroken doesn't mean gone. I rebuild mid-fight if I have to.\u201d",
+        },
+      },
       community: "14 people checked in today",
     },
     summary: {
@@ -72,6 +98,32 @@ const translations = {
       selftalk_line: "\u201c한 라운드가 경기 전체를 결정하지 않는다. 리셋하고 다음 라운드로.\u201d",
       try_another: "다른 문구 보기",
       this_helped: "도움이 됐어요 · xp 받기",
+      pick_label: "오늘의 마인드 픽 · 경기 전",
+      pick_xp: "+15 xp",
+      pick_hint: "밴픽처럼, 지금 나에게 필요한 마인드를 골라보세요.",
+      pick_placeholder: "위에서 하나를 선택하면 리프레임 문구가 보여요.",
+      archetypes: {
+        warrior: {
+          name: "전사",
+          before: "\u201c저번 판은 이미 망쳤어.\u201d",
+          after: "\u201c저번 판은 끝났고, 이번 판은 아직 시작도 안 했어. 나는 이번 판에 나선다.\u201d",
+        },
+        guardian: {
+          name: "수호자",
+          before: "\u201c방패에 금이 갔어, 이제 뚫렸어.\u201d",
+          after: "\u201c금이 갔다고 부서진 건 아니야. 그래도 자리는 지킨다.\u201d",
+        },
+        trickster: {
+          name: "책사",
+          before: "\u201c그때 그 수를 읽혔어, 나는 뻔해.\u201d",
+          after: "\u201c한 번 읽혔다고 패턴이 되는 건 아니야. 나는 더 빠르게 바꾼다.\u201d",
+        },
+        phoenix: {
+          name: "불사조",
+          before: "\u201c다 타버렸어, 더는 남은 게 없어.\u201d",
+          after: "\u201c부러진 건 사라진 게 아니야. 싸우는 중에도 다시 붙이면 돼.\u201d",
+        },
+      },
       community: "오늘 14명이 체크인했어요",
     },
     summary: {
@@ -109,7 +161,27 @@ function applyTranslations() {
 function toggleLanguage() {
   currentLang = currentLang === "en" ? "ko" : "en";
   applyTranslations();
+  if (selectedArchetype) showArchetype(selectedArchetype);
 }
+
+// --- Pick-style self-talk (esports-inspired, see Dr. Kim's champion-select concept) ---
+let selectedArchetype = null;
+
+function showArchetype(key) {
+  selectedArchetype = key;
+  const data = translations[currentLang].home.archetypes[key];
+  document.getElementById("archetype-before").textContent = data.before;
+  document.getElementById("archetype-after").textContent = data.after;
+  document.getElementById("archetype-result").classList.remove("hidden");
+  document.getElementById("archetype-placeholder").classList.add("hidden");
+  document.querySelectorAll(".archetype-chip").forEach((chip) => {
+    chip.classList.toggle("selected", chip.dataset.archetype === key);
+  });
+}
+
+document.querySelectorAll(".archetype-chip").forEach((chip) => {
+  chip.addEventListener("click", () => showArchetype(chip.dataset.archetype));
+});
 
 function showScreen(id) {
   document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
