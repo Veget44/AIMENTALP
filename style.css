@@ -62,7 +62,7 @@ body {
   font-size: 11px;
   letter-spacing: 0.04em;
   padding: 7px 14px;
-  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  border-radius: 8px;
   border: 1px solid var(--border);
   background: var(--surface-raised);
   color: var(--text-secondary);
@@ -88,7 +88,7 @@ body {
 
 /* ---------- signature motif: cut-corner HUD panel ---------- */
 .panel-cut {
-  clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+  border-radius: 12px;
   position: relative;
   border-top: 2px solid var(--border);
 }
@@ -127,7 +127,7 @@ h1 {
 /* ---------- icon tiles ---------- */
 .icon-tile {
   width: 38px; height: 38px;
-  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+  border-radius: 9px;
   background: var(--mint-dim); color: var(--mint);
   display: flex; align-items: center; justify-content: center;
   font-size: 18px; flex-shrink: 0;
@@ -170,7 +170,7 @@ h1 {
 /* ---------- buttons ---------- */
 .primary-button {
   width: 100%; padding: 13px 0; border: none;
-  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  border-radius: 10px;
   background: var(--mint); color: #05130c;
   font-family: var(--font-display); font-size: 14px; font-weight: 700; letter-spacing: 0.03em;
   text-transform: uppercase; cursor: pointer;
@@ -202,7 +202,7 @@ h1 {
 .streak-badge {
   font-family: var(--font-mono);
   font-size: 11px; padding: 6px 12px;
-  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
+  border-radius: 7px;
   background: var(--amber-dim); color: var(--amber);
   display: flex; align-items: center; gap: 5px; font-weight: 600;
 }
@@ -252,6 +252,18 @@ h1 {
 }
 
 /* ---------- archetype pick ---------- */
+.mini-label {
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-muted); margin: 0 0 6px;
+}
+.game-selector { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.game-chip {
+  padding: 6px 12px; border-radius: 20px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text-secondary); font-size: 11px; cursor: pointer; font-family: var(--font-body);
+}
+.game-chip.selected { border-color: var(--violet); background: var(--violet); color: #ffffff; font-weight: 600; }
+
 .archetype-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 4px; }
 .archetype-chip {
   display: flex; flex-direction: column; align-items: center; gap: 5px;
