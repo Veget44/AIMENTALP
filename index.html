@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mental performance app — concept prototype</title>
+<meta name="description" content="A clickable concept prototype for a gamified mental performance app, tailored to traditional sport and esports roles.">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="256x256" href="images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -85,15 +88,15 @@
             <p class="muted-xs" data-i18n="home.header_subtitle"></p>
           </div>
         </div>
-        <span class="streak-badge"><i class="ti ti-flame"></i> <span data-i18n="home.streak"></span></span>
+        <span class="streak-badge"><i class="ti ti-flame"></i> <span id="streak-text"></span></span>
       </div>
 
       <div class="card panel-cut accent-mint">
         <div class="row-between">
-          <span class="level-label" data-i18n="home.level"></span>
-          <span class="mono-tag" data-i18n="home.xp"></span>
+          <span class="level-label" id="level-text"></span>
+          <span class="mono-tag" id="xp-text"></span>
         </div>
-        <div class="progress-track segmented"><div class="progress-fill" style="width:60%"></div></div>
+        <div class="progress-track"><div class="progress-fill" id="xp-progress-fill" style="width:0%"></div></div>
       </div>
 
       <button class="primary-button big" id="btn-start-checkin">
@@ -123,6 +126,8 @@
         </div>
         <p class="muted-xs" style="margin:10px 0 0;" data-i18n="home.community_footer"></p>
       </div>
+
+      <button class="reset-link" id="btn-reset-demo" data-i18n="home.reset_demo"></button>
     </section>
 
     <!-- SCREEN 3: guided check-in flow — one step at a time -->
@@ -204,19 +209,19 @@
       <!-- step: checklist -->
       <div class="step-panel" data-step="checklist">
         <p class="step-title" data-i18n="flow.checklist_question"></p>
-        <div class="checklist">
+        <div class="checklist" id="checklist">
           <label class="checklist-item">
-            <input type="checkbox" checked>
+            <input type="checkbox" data-index="0" checked>
             <span class="check-box"><i class="ti ti-check"></i></span>
             <span data-i18n="home.checklist_items.0"></span>
           </label>
           <label class="checklist-item">
-            <input type="checkbox">
+            <input type="checkbox" data-index="1">
             <span class="check-box"><i class="ti ti-check"></i></span>
             <span data-i18n="home.checklist_items.1"></span>
           </label>
           <label class="checklist-item">
-            <input type="checkbox">
+            <input type="checkbox" data-index="2">
             <span class="check-box"><i class="ti ti-check"></i></span>
             <span data-i18n="home.checklist_items.2"></span>
           </label>
@@ -239,11 +244,11 @@
 
       <div class="row-gap stretch">
         <div class="card panel-cut center-col flex1">
-          <p class="stat-number accent" data-i18n="summary.xp_value"></p>
+          <p class="stat-number accent" id="summary-xp-value"></p>
           <p class="muted-xs" data-i18n="summary.xp_label"></p>
         </div>
         <div class="card panel-cut center-col flex1">
-          <p class="stat-number" data-i18n="summary.streak_value"></p>
+          <p class="stat-number" id="summary-streak-value"></p>
           <p class="muted-xs" data-i18n="summary.streak_label"></p>
         </div>
       </div>
