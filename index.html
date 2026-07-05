@@ -74,9 +74,8 @@
       <button class="primary-button" id="btn-to-home" data-i18n="onboarding.continue"></button>
     </section>
 
-    <!-- SCREEN 2: unified home / daily check-in -->
+    <!-- SCREEN 2: home dashboard (light — one entry point, not a wall of cards) -->
     <section id="screen-home" class="screen">
-
       <div class="hud-header panel-cut">
         <div class="row-gap">
           <div class="icon-tile"><i class="ti ti-brain"></i></div>
@@ -96,82 +95,12 @@
         <div class="progress-track segmented"><div class="progress-fill" style="width:60%"></div></div>
       </div>
 
-      <p class="section-label" data-i18n="home.mood_question"></p>
-      <div class="mood-grid">
-        <button class="mood-tile selected" data-mood="calm"><i class="ti ti-mood-smile-beam"></i><span data-i18n="home.moods.calm"></span></button>
-        <button class="mood-tile" data-mood="focused"><i class="ti ti-target-arrow"></i><span data-i18n="home.moods.focused"></span></button>
-        <button class="mood-tile" data-mood="tense"><i class="ti ti-bolt"></i><span data-i18n="home.moods.tense"></span></button>
-        <button class="mood-tile" data-mood="tired"><i class="ti ti-battery-2"></i><span data-i18n="home.moods.tired"></span></button>
-        <button class="mood-tile" data-mood="low"><i class="ti ti-cloud-rain"></i><span data-i18n="home.moods.low"></span></button>
-        <button class="mood-tile" data-mood="wired"><i class="ti ti-activity"></i><span data-i18n="home.moods.wired"></span></button>
-      </div>
+      <button class="primary-button big" id="btn-start-checkin">
+        <i class="ti ti-player-play"></i> <span data-i18n="home.start_checkin"></span>
+      </button>
+      <p class="muted-xs center-text" data-i18n="home.start_checkin_hint"></p>
 
-      <div class="card panel-cut accent-amber">
-        <div class="row-between muted-xs" style="margin-bottom:10px;">
-          <span data-i18n="home.selftalk.label"></span>
-          <span class="mono-tag amber" data-i18n="home.selftalk.xp_tag"></span>
-        </div>
-        <div class="phase-tabs" id="phase-tabs">
-          <button class="phase-tab selected" data-phase="pre" data-i18n="home.selftalk.tabs.pre"></button>
-          <button class="phase-tab" data-phase="mid" data-i18n="home.selftalk.tabs.mid"></button>
-          <button class="phase-tab" data-phase="recovery" data-i18n="home.selftalk.tabs.recovery"></button>
-        </div>
-        <p class="selftalk-line" id="selftalk-line"></p>
-        <div class="row-gap">
-          <button class="secondary-button" id="btn-try-another" data-i18n="home.try_another"></button>
-          <button class="secondary-button" id="btn-to-summary" data-i18n="home.this_helped"></button>
-        </div>
-      </div>
-
-      <!-- PICK-STYLE SELF-TALK: pre-match role select, tailored per game -->
-      <div class="card panel-cut accent-violet">
-        <div class="row-between muted-xs" style="margin-bottom:2px;">
-          <span data-i18n="home.pick_label"></span>
-          <span class="mono-tag violet" data-i18n="home.pick_xp"></span>
-        </div>
-        <p class="muted-xs" style="margin-bottom:12px;" data-i18n="home.pick_hint"></p>
-
-        <p class="mini-label" data-i18n="home.game_label"></p>
-        <div class="game-selector" id="game-selector">
-          <button class="game-chip selected" data-game="lol" data-i18n="home.games.lol.label"></button>
-          <button class="game-chip" data-game="valorant" data-i18n="home.games.valorant.label"></button>
-          <button class="game-chip" data-game="traditional" data-i18n="home.games.traditional.label"></button>
-          <button class="game-chip" data-game="other" data-i18n="home.games.other.label"></button>
-        </div>
-
-        <p class="mini-label" data-i18n="home.role_label"></p>
-        <div class="archetype-grid" id="archetype-grid"></div>
-
-        <div id="archetype-result" class="archetype-result hidden">
-          <p class="reframe-before" id="archetype-before"></p>
-          <div class="reframe-arrow"><i class="ti ti-arrow-down"></i></div>
-          <p class="reframe-after" id="archetype-after"></p>
-        </div>
-        <p class="muted-xs archetype-placeholder" id="archetype-placeholder" data-i18n="home.pick_placeholder"></p>
-      </div>
-
-      <div class="card panel-cut">
-        <p class="section-label" data-i18n="home.checklist_label"></p>
-        <div class="checklist">
-          <label class="checklist-item">
-            <input type="checkbox" checked>
-            <span class="check-box"><i class="ti ti-check"></i></span>
-            <span data-i18n="home.checklist_items.0"></span>
-          </label>
-          <label class="checklist-item">
-            <input type="checkbox">
-            <span class="check-box"><i class="ti ti-check"></i></span>
-            <span data-i18n="home.checklist_items.1"></span>
-          </label>
-          <label class="checklist-item">
-            <input type="checkbox">
-            <span class="check-box"><i class="ti ti-check"></i></span>
-            <span data-i18n="home.checklist_items.2"></span>
-          </label>
-        </div>
-      </div>
-
-      <div class="card panel-cut">
+      <div class="card panel-cut" style="margin-top:22px;">
         <div class="row-between" style="margin-bottom:8px;">
           <span class="section-label" style="margin:0;" data-i18n="home.community_label"></span>
           <i class="ti ti-chevron-right muted-icon"></i>
@@ -195,7 +124,111 @@
       </div>
     </section>
 
-    <!-- SCREEN 3: post-session summary -->
+    <!-- SCREEN 3: guided check-in flow — one step at a time -->
+    <section id="screen-flow" class="screen">
+      <div class="flow-header">
+        <div class="flow-dots" id="flow-dots"></div>
+        <p class="flow-step-label" id="flow-step-label"></p>
+      </div>
+
+      <!-- step: mood -->
+      <div class="step-panel" data-step="mood">
+        <p class="step-title" data-i18n="flow.mood_question"></p>
+        <div class="mood-grid">
+          <button class="mood-tile selected" data-mood="calm"><i class="ti ti-mood-smile-beam"></i><span data-i18n="home.moods.calm"></span></button>
+          <button class="mood-tile" data-mood="focused"><i class="ti ti-target-arrow"></i><span data-i18n="home.moods.focused"></span></button>
+          <button class="mood-tile" data-mood="tense"><i class="ti ti-bolt"></i><span data-i18n="home.moods.tense"></span></button>
+          <button class="mood-tile" data-mood="tired"><i class="ti ti-battery-2"></i><span data-i18n="home.moods.tired"></span></button>
+          <button class="mood-tile" data-mood="low"><i class="ti ti-cloud-rain"></i><span data-i18n="home.moods.low"></span></button>
+          <button class="mood-tile" data-mood="wired"><i class="ti ti-activity"></i><span data-i18n="home.moods.wired"></span></button>
+        </div>
+      </div>
+
+      <!-- step: game -->
+      <div class="step-panel" data-step="game">
+        <p class="step-title" data-i18n="flow.game_question"></p>
+        <p class="muted-xs" style="margin-bottom:16px;" data-i18n="flow.game_hint"></p>
+        <div class="game-list" id="game-list">
+          <button class="game-row selected" data-game="lol">
+            <i class="ti ti-sword"></i>
+            <span data-i18n="home.games.lol.label"></span>
+            <i class="ti ti-check check-icon"></i>
+          </button>
+          <button class="game-row" data-game="valorant">
+            <i class="ti ti-crosshair"></i>
+            <span data-i18n="home.games.valorant.label"></span>
+            <i class="ti ti-check check-icon"></i>
+          </button>
+          <button class="game-row" data-game="traditional">
+            <i class="ti ti-ball-football"></i>
+            <span data-i18n="home.games.traditional.label"></span>
+            <i class="ti ti-check check-icon"></i>
+          </button>
+          <button class="game-row" data-game="other">
+            <i class="ti ti-dots"></i>
+            <span data-i18n="home.games.other.label"></span>
+            <i class="ti ti-check check-icon"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- step: role + reframe reveal -->
+      <div class="step-panel" data-step="role">
+        <p class="step-title" data-i18n="flow.role_question"></p>
+        <p class="muted-xs" style="margin-bottom:16px;" id="role-question-game"></p>
+        <div class="archetype-grid" id="archetype-grid"></div>
+
+        <div id="archetype-result" class="archetype-result hidden">
+          <p class="reframe-before" id="archetype-before"></p>
+          <div class="reframe-arrow"><i class="ti ti-arrow-down"></i></div>
+          <p class="reframe-after" id="archetype-after"></p>
+        </div>
+        <p class="muted-xs archetype-placeholder" id="archetype-placeholder" data-i18n="flow.role_placeholder"></p>
+      </div>
+
+      <!-- step: self-talk -->
+      <div class="step-panel" data-step="selftalk">
+        <p class="step-title" data-i18n="flow.selftalk_question"></p>
+        <div class="phase-tabs" id="phase-tabs">
+          <button class="phase-tab selected" data-phase="pre" data-i18n="home.selftalk.tabs.pre"></button>
+          <button class="phase-tab" data-phase="mid" data-i18n="home.selftalk.tabs.mid"></button>
+          <button class="phase-tab" data-phase="recovery" data-i18n="home.selftalk.tabs.recovery"></button>
+        </div>
+        <div class="card panel-cut accent-amber">
+          <p class="selftalk-line" id="selftalk-line"></p>
+          <button class="secondary-button full-width" id="btn-try-another" data-i18n="home.try_another"></button>
+        </div>
+      </div>
+
+      <!-- step: checklist -->
+      <div class="step-panel" data-step="checklist">
+        <p class="step-title" data-i18n="flow.checklist_question"></p>
+        <div class="checklist">
+          <label class="checklist-item">
+            <input type="checkbox" checked>
+            <span class="check-box"><i class="ti ti-check"></i></span>
+            <span data-i18n="home.checklist_items.0"></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span class="check-box"><i class="ti ti-check"></i></span>
+            <span data-i18n="home.checklist_items.1"></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span class="check-box"><i class="ti ti-check"></i></span>
+            <span data-i18n="home.checklist_items.2"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="flow-nav">
+        <button class="secondary-button" id="btn-flow-back" data-i18n="flow.back"></button>
+        <button class="primary-button" id="btn-flow-next"></button>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: post-session summary -->
     <section id="screen-summary" class="screen">
       <div class="center-col">
         <div class="icon-tile success"><i class="ti ti-check"></i></div>
@@ -264,7 +297,8 @@
         <div class="progress-track segmented"><div class="progress-fill warning" style="width:85%"></div></div>
       </div>
 
-      <button class="primary-button" id="btn-restart"><i class="ti ti-users"></i> <span data-i18n="summary.share_button"></span></button>
+      <button class="primary-button" id="btn-back-home"><i class="ti ti-home"></i> <span data-i18n="summary.back_home"></span></button>
+      <button class="secondary-button full-width" id="btn-share" style="margin-top:8px;"><span data-i18n="summary.share_button"></span></button>
     </section>
 
   </main>
