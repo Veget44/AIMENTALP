@@ -1,3 +1,6 @@
+// Bumped by +1 on every deploy so it's easy to confirm which version is live.
+const BUILD_NUMBER = 1;
+
 // Translation content for the two supported languages.
 const translations = {
   en: {
@@ -334,6 +337,7 @@ function applyTranslations() {
     if (value !== undefined) el.textContent = value;
   });
   document.documentElement.lang = currentLang === "ko" ? "ko" : "en";
+  document.getElementById("build-number").textContent = " · build #" + BUILD_NUMBER;
 }
 
 function formatStreak(n) {
