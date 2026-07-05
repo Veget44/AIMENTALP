@@ -19,6 +19,19 @@ const translations = {
       goal_routine: "consistency",
       continue: "continue",
     },
+    flow: {
+      mood_question: "How are you feeling right now?",
+      game_question: "Which game are you playing today?",
+      game_hint: "We'll tailor role-based self-talk to it.",
+      role_question: "Pick your role",
+      role_placeholder: "Pick a role above to see your reframe.",
+      selftalk_question: "Read this before you start",
+      checklist_question: "Before you start",
+      back: "back",
+      next: "continue",
+      next_selftalk: "this helped · continue",
+      next_finish: "finish check-in",
+    },
     home: {
       header_title: "Today",
       header_subtitle: "Pre-training check-in",
@@ -27,9 +40,9 @@ const translations = {
       xp: "240 / 400 xp",
       mood_question: "How are you feeling right now?",
       moods: { calm: "calm", focused: "focused", tense: "tense", tired: "tired", low: "low", wired: "wired" },
+      start_checkin: "start today's check-in",
+      start_checkin_hint: "takes about 3 minutes",
       selftalk: {
-        label: "self-talk · tailored for esports",
-        xp_tag: "+20 xp",
         tabs: { pre: "pre-match", mid: "mid-match", recovery: "recovery" },
         lines: {
           pre: [
@@ -50,13 +63,6 @@ const translations = {
         },
       },
       try_another: "try another",
-      this_helped: "this helped · claim xp",
-      pick_label: "pick your role self-talk · pre-match",
-      pick_xp: "+15 xp",
-      pick_hint: "Choose your game, then the role you're playing today.",
-      pick_placeholder: "Pick a role above to see your reframe.",
-      game_label: "your game",
-      role_label: "your role today",
       games: {
         lol: {
           label: "League of Legends",
@@ -129,6 +135,7 @@ const translations = {
       badges_label: "badges",
       badges: { steady: "steady mind", comeback: "comeback", routine: "iron routine" },
       badge_remaining: "\u2018comeback\u2019 badge · 1 clutch reset to go",
+      back_home: "back to home",
       share_button: "share with teammates",
     },
   },
@@ -151,6 +158,19 @@ const translations = {
       goal_routine: "꾸준함",
       continue: "계속하기",
     },
+    flow: {
+      mood_question: "지금 기분은 어떤가요?",
+      game_question: "오늘 어떤 게임을 하나요?",
+      game_hint: "선택한 게임에 맞는 역할별 셀프토크를 보여드려요.",
+      role_question: "오늘의 역할을 선택하세요",
+      role_placeholder: "위에서 역할을 선택하면 리프레임 문구가 보여요.",
+      selftalk_question: "시작하기 전에 읽어보세요",
+      checklist_question: "시작 전 체크리스트",
+      back: "뒤로",
+      next: "계속하기",
+      next_selftalk: "도움이 됐어요 · 계속하기",
+      next_finish: "체크인 완료하기",
+    },
     home: {
       header_title: "오늘",
       header_subtitle: "훈련 전 체크인",
@@ -159,9 +179,9 @@ const translations = {
       xp: "240 / 400 xp",
       mood_question: "지금 기분은 어떤가요?",
       moods: { calm: "차분함", focused: "집중됨", tense: "긴장됨", tired: "지침", low: "가라앉음", wired: "흥분됨" },
+      start_checkin: "오늘의 체크인 시작하기",
+      start_checkin_hint: "약 3분 정도 걸려요",
       selftalk: {
-        label: "셀프토크 · e스포츠 맞춤",
-        xp_tag: "+20 xp",
         tabs: { pre: "경기 전", mid: "경기 중", recovery: "회복" },
         lines: {
           pre: [
@@ -182,13 +202,6 @@ const translations = {
         },
       },
       try_another: "다른 문구 보기",
-      this_helped: "도움이 됐어요 · xp 받기",
-      pick_label: "역할별 셀프토크 · 경기 전",
-      pick_xp: "+15 xp",
-      pick_hint: "먼저 게임을 고르고, 오늘 맡은 역할을 선택하세요.",
-      pick_placeholder: "위에서 역할을 선택하면 리프레임 문구가 보여요.",
-      game_label: "게임 선택",
-      role_label: "오늘의 역할",
       games: {
         lol: {
           label: "리그 오브 레전드",
@@ -261,6 +274,7 @@ const translations = {
       badges_label: "배지",
       badges: { steady: "평정심", comeback: "컴백", routine: "꾸준함의 정석" },
       badge_remaining: "'컴백' 배지 · 클러치 리셋 1회 남음",
+      back_home: "홈으로 돌아가기",
       share_button: "팀원과 공유하기",
     },
   },
@@ -280,6 +294,9 @@ let phaseLineIndex = { pre: 0, mid: 0, recovery: 0 };
 let currentGame = "lol";
 let selectedRole = null;
 
+const STEPS = ["mood", "game", "role", "selftalk", "checklist"];
+let currentStepIndex = 0;
+
 function applyTranslations() {
   const dict = translations[currentLang];
   document.querySelectorAll("[data-i18n]").forEach((el) => {
@@ -297,24 +314,23 @@ function renderSelfTalkLine() {
   document.getElementById("selftalk-line").textContent = lines[idx];
 }
 
-// --- pick-style self-talk: game selector + role grid rendered per game ---
+// --- role grid rendered per selected game ---
 function renderRoleGrid() {
   const grid = document.getElementById("archetype-grid");
   grid.innerHTML = "";
-  const roles = translations[currentLang].home.games[currentGame].roles;
+  const gameData = translations[currentLang].home.games[currentGame];
+  document.getElementById("role-question-game").textContent = gameData.label;
+  const roles = gameData.roles;
   Object.keys(roles).forEach((roleKey) => {
     const btn = document.createElement("button");
     btn.className = "archetype-chip";
     btn.dataset.role = roleKey;
+    if (roleKey === selectedRole) btn.classList.add("selected");
     const icon = roleIcons[currentGame][roleKey] || "ti-user";
     btn.innerHTML = '<i class="ti ' + icon + '"></i><span>' + roles[roleKey].name + "</span>";
     btn.addEventListener("click", () => showRole(roleKey));
     grid.appendChild(btn);
   });
-  // Reset the result panel whenever the role list changes (new game selected).
-  selectedRole = null;
-  document.getElementById("archetype-result").classList.add("hidden");
-  document.getElementById("archetype-placeholder").classList.remove("hidden");
 }
 
 function showRole(roleKey) {
@@ -327,14 +343,15 @@ function showRole(roleKey) {
   document.querySelectorAll(".archetype-chip").forEach((chip) => {
     chip.classList.toggle("selected", chip.dataset.role === roleKey);
   });
+  updateFlowNav();
 }
 
 function selectGame(gameKey) {
   currentGame = gameKey;
-  document.querySelectorAll(".game-chip").forEach((chip) => {
-    chip.classList.toggle("selected", chip.dataset.game === gameKey);
+  selectedRole = null;
+  document.querySelectorAll(".game-row").forEach((row) => {
+    row.classList.toggle("selected", row.dataset.game === gameKey);
   });
-  renderRoleGrid();
 }
 
 function toggleLanguage() {
@@ -342,13 +359,77 @@ function toggleLanguage() {
   const roleToRestore = selectedRole;
   applyTranslations();
   renderSelfTalkLine();
-  renderRoleGrid();
+  renderFlowStep();
   if (roleToRestore) showRole(roleToRestore);
 }
 
 function showScreen(id) {
   document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
+}
+
+// --- guided flow engine: one step visible at a time, with progress + nav ---
+function renderFlowStep() {
+  const stepId = STEPS[currentStepIndex];
+
+  document.querySelectorAll(".step-panel").forEach((panel) => {
+    panel.classList.toggle("active", panel.dataset.step === stepId);
+  });
+
+  const dotsEl = document.getElementById("flow-dots");
+  dotsEl.innerHTML = "";
+  STEPS.forEach((_, i) => {
+    const dot = document.createElement("span");
+    if (i < currentStepIndex) dot.classList.add("done");
+    if (i === currentStepIndex) dot.classList.add("current");
+    dotsEl.appendChild(dot);
+  });
+  document.getElementById("flow-step-label").textContent =
+    currentLang === "ko"
+      ? (currentStepIndex + 1) + " / " + STEPS.length + " 단계"
+      : "step " + (currentStepIndex + 1) + " / " + STEPS.length;
+
+  if (stepId === "role") renderRoleGrid();
+  if (stepId === "selftalk") renderSelfTalkLine();
+
+  updateFlowNav();
+}
+
+function updateFlowNav() {
+  const stepId = STEPS[currentStepIndex];
+  const nextBtn = document.getElementById("btn-flow-next");
+  const t = translations[currentLang].flow;
+
+  let label = t.next;
+  if (stepId === "selftalk") label = t.next_selftalk;
+  if (stepId === "checklist") label = t.next_finish;
+  nextBtn.textContent = label;
+
+  nextBtn.disabled = stepId === "role" && !selectedRole;
+}
+
+function goFlowNext() {
+  if (currentStepIndex === STEPS.length - 1) {
+    showScreen("screen-summary");
+    return;
+  }
+  currentStepIndex += 1;
+  renderFlowStep();
+}
+
+function goFlowBack() {
+  if (currentStepIndex === 0) {
+    showScreen("screen-home");
+    return;
+  }
+  currentStepIndex -= 1;
+  renderFlowStep();
+}
+
+function startCheckin() {
+  currentStepIndex = 0;
+  showScreen("screen-flow");
+  renderFlowStep();
 }
 
 // --- self-talk phase tabs + cycling lines ---
@@ -366,14 +447,17 @@ document.getElementById("btn-try-another").addEventListener("click", () => {
   renderSelfTalkLine();
 });
 
-document.querySelectorAll(".game-chip").forEach((chip) => {
-  chip.addEventListener("click", () => selectGame(chip.dataset.game));
+document.querySelectorAll(".game-row").forEach((row) => {
+  row.addEventListener("click", () => selectGame(row.dataset.game));
 });
 
 document.getElementById("lang-toggle").addEventListener("click", toggleLanguage);
 document.getElementById("btn-to-home").addEventListener("click", () => showScreen("screen-home"));
-document.getElementById("btn-to-summary").addEventListener("click", () => showScreen("screen-summary"));
-document.getElementById("btn-restart").addEventListener("click", () => showScreen("screen-onboarding"));
+document.getElementById("btn-start-checkin").addEventListener("click", startCheckin);
+document.getElementById("btn-flow-next").addEventListener("click", goFlowNext);
+document.getElementById("btn-flow-back").addEventListener("click", goFlowBack);
+document.getElementById("btn-back-home").addEventListener("click", () => showScreen("screen-home"));
+document.getElementById("btn-share").addEventListener("click", () => showScreen("screen-home"));
 
 // Toggle option selection state on the onboarding screen (visual only, no persistence).
 document.querySelectorAll(".option").forEach((opt) => {
@@ -397,7 +481,7 @@ document.querySelectorAll(".chip-tile").forEach((chip) => {
   chip.addEventListener("click", () => chip.classList.toggle("selected"));
 });
 
-// Toggle mood selection on the home screen (single-select, visual only).
+// Toggle mood selection (single-select, visual only).
 document.querySelectorAll(".mood-tile").forEach((tile) => {
   tile.addEventListener("click", () => {
     document.querySelectorAll(".mood-tile").forEach((t) => t.classList.remove("selected"));
@@ -407,4 +491,3 @@ document.querySelectorAll(".mood-tile").forEach((tile) => {
 
 applyTranslations();
 renderSelfTalkLine();
-renderRoleGrid();
