@@ -95,12 +95,12 @@ const translations = {
         other: {
           label: "other / generic",
           roles: {
-            warrior: { name: "warrior", before: "\u201cI already threw the last fight.\u201d", after: "\u201cThe last fight is over. This one hasn't started \u2014 I show up for it.\u201d" },
-            guardian: { name: "guardian", before: "\u201cMy shield cracked, I'm exposed now.\u201d", after: "\u201cA crack isn't a break. I hold the line anyway.\u201d" },
-            trickster: { name: "trickster", before: "\u201cThey read my last move, I'm predictable.\u201d", after: "\u201cOne read isn't a pattern. I adapt faster than they can punish.\u201d" },
-            phoenix: { name: "phoenix", before: "\u201cI'm burned out, there's nothing left.\u201d", after: "\u201cBroken doesn't mean gone. I rebuild mid-fight if I have to.\u201d" },
-            scout: { name: "scout", before: "\u201cI missed the signs, I'm always behind.\u201d", after: "\u201cI don't need every signal. I need the next one.\u201d" },
-            anchor: { name: "anchor", before: "\u201cEveryone's watching, I can't think straight.\u201d", after: "\u201cThe crowd is noise. My breath is the only signal I follow.\u201d" },
+            starter: { name: "starter", before: "\u201cI always start slow, I'm behind before I begin.\u201d", after: "\u201cA slow start isn't a lost performance. I build into it.\u201d" },
+            steady: { name: "steady", before: "\u201cMy hands are shaking, I look nervous.\u201d", after: "\u201cShaking hands don't decide the outcome. My focus does.\u201d" },
+            adapter: { name: "adapter", before: "\u201cThe plan fell apart, now what.\u201d", after: "\u201cPlans change. I still know how to respond.\u201d" },
+            closer: { name: "closer", before: "\u201cI always fade at the end.\u201d", after: "\u201cThe finish is just the next part I execute, not a verdict on me.\u201d" },
+            communicator: { name: "communicator", before: "\u201cNo one's talking to me, I feel alone out here.\u201d", after: "\u201cI don't need noise to feel connected. I bring my own steadiness.\u201d" },
+            recoverer: { name: "recoverer", before: "\u201cThat setback ruined everything.\u201d", after: "\u201cA setback is one moment. My response is the next one.\u201d" },
           },
         },
       },
@@ -117,6 +117,7 @@ const translations = {
         { name: "player_138", streak: "4 day streak" },
       ],
       community_footer: "14 people checked in today",
+      reset_demo: "reset demo data",
     },
     summary: {
       title: "Today's check-in complete",
@@ -234,12 +235,12 @@ const translations = {
         other: {
           label: "기타 / 범용",
           roles: {
-            warrior: { name: "전사", before: "\u201c저번 판은 이미 망쳤어.\u201d", after: "\u201c저번 판은 끝났고, 이번 판은 아직 시작도 안 했어. 나는 이번 판에 나선다.\u201d" },
-            guardian: { name: "수호자", before: "\u201c방패에 금이 갔어, 이제 뚫렸어.\u201d", after: "\u201c금이 갔다고 부서진 건 아니야. 그래도 자리는 지킨다.\u201d" },
-            trickster: { name: "책사", before: "\u201c그때 그 수를 읽혔어, 나는 뻔해.\u201d", after: "\u201c한 번 읽혔다고 패턴이 되는 건 아니야. 나는 더 빠르게 바꾼다.\u201d" },
-            phoenix: { name: "불사조", before: "\u201c다 타버렸어, 더는 남은 게 없어.\u201d", after: "\u201c부러진 건 사라진 게 아니야. 싸우는 중에도 다시 붙이면 돼.\u201d" },
-            scout: { name: "정찰병", before: "\u201c신호를 놓쳤어, 나는 항상 뒤처져.\u201d", after: "\u201c모든 신호를 다 볼 필요는 없어. 다음 신호 하나면 충분해.\u201d" },
-            anchor: { name: "닻", before: "\u201c다들 보고 있어, 생각이 하나도 안 나.\u201d", after: "\u201c관중은 소음일 뿐이야. 내가 따라갈 신호는 내 호흡 하나뿐이다.\u201d" },
+            starter: { name: "시작", before: "\u201c난 항상 늦게 시작해, 시작하기도 전에 뒤처져.\u201d", after: "\u201c느린 시작이 전체를 망치지 않아. 거기서부터 만들어간다.\u201d" },
+            steady: { name: "평정", before: "\u201c손이 떨려, 긴장한 게 티 나.\u201d", after: "\u201c떨리는 손이 결과를 정하지 않아. 내 집중이 정한다.\u201d" },
+            adapter: { name: "적응", before: "\u201c계획이 다 틀어졌어, 이제 어떡하지.\u201d", after: "\u201c계획은 바뀔 수 있어. 나는 여전히 대응하는 법을 안다.\u201d" },
+            closer: { name: "마무리", before: "\u201c나는 항상 막판에 무너져.\u201d", after: "\u201c마무리는 나를 평가하는 게 아니라 그냥 다음에 할 일이다.\u201d" },
+            communicator: { name: "소통", before: "\u201c아무도 나한테 말을 안 걸어, 혼자인 것 같아.\u201d", after: "\u201c소음이 없어도 연결될 수 있어. 내 안정감을 내가 가져온다.\u201d" },
+            recoverer: { name: "회복", before: "\u201c그 실패가 모든 걸 망쳤어.\u201d", after: "\u201c그 순간은 지나갔다. 내 다음 반응이 중요하다.\u201d" },
           },
         },
       },
@@ -256,6 +257,7 @@ const translations = {
         { name: "player_138", streak: "4일 연속" },
       ],
       community_footer: "오늘 14명이 체크인했어요",
+      reset_demo: "데모 데이터 초기화",
     },
     summary: {
       title: "오늘의 체크인 완료",
@@ -285,14 +287,40 @@ const roleIcons = {
   lol: { top: "ti-sword", jungle: "ti-trees", mid: "ti-bolt", adc: "ti-target", support: "ti-shield-heart" },
   valorant: { duelist: "ti-crosshair", controller: "ti-cloud", initiator: "ti-eye", sentinel: "ti-shield-lock" },
   traditional: { attacker: "ti-target-arrow", midfielder: "ti-repeat", defender: "ti-shield", goalkeeper: "ti-hand-stop" },
-  other: { warrior: "ti-sword", guardian: "ti-shield", trickster: "ti-chess-knight", phoenix: "ti-feather", scout: "ti-binoculars", anchor: "ti-anchor" },
+  other: { starter: "ti-flag", steady: "ti-scale", adapter: "ti-refresh", closer: "ti-target", communicator: "ti-message-circle", recoverer: "ti-battery-charging" },
 };
+
+
+// --- persistence: keep mood / game / role / checklist / streak / xp across reloads ---
+const STORAGE_KEY = "aimentalp_demo_state_v1";
+const XP_PER_LEVEL = 400;
+const XP_PER_CHECKIN = 45;
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {
+    // localStorage unavailable (private mode, etc.) — fall back to defaults, nothing persists.
+  }
+  return { streakDay: 12, xpTotal: 240, mood: "calm", game: "lol", rolesByGame: {}, checklist: [true, false, false] };
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {
+    // Ignore write failures — the demo still works in-memory for this session.
+  }
+}
+
+let state = loadState();
 
 let currentLang = "en";
 let currentPhase = "pre";
 let phaseLineIndex = { pre: 0, mid: 0, recovery: 0 };
-let currentGame = "lol";
-let selectedRole = null;
+let currentGame = state.game;
+let selectedRole = state.rolesByGame[currentGame] || null;
 
 const STEPS = ["mood", "game", "role", "selftalk", "checklist"];
 let currentStepIndex = 0;
@@ -306,6 +334,20 @@ function applyTranslations() {
     if (value !== undefined) el.textContent = value;
   });
   document.documentElement.lang = currentLang === "ko" ? "ko" : "en";
+}
+
+function formatStreak(n) {
+  return currentLang === "ko" ? n + "일째" : "day " + n;
+}
+
+function updateStatsUI() {
+  const level = Math.floor(state.xpTotal / XP_PER_LEVEL) + 1;
+  const xpInLevel = state.xpTotal % XP_PER_LEVEL;
+  const levelText = currentLang === "ko" ? "티어 " + level + " · 집중력 트랙" : "tier " + level + " · focus track";
+  document.getElementById("level-text").textContent = levelText;
+  document.getElementById("xp-text").textContent = xpInLevel + " / " + XP_PER_LEVEL + " xp";
+  document.getElementById("xp-progress-fill").style.width = Math.round((xpInLevel / XP_PER_LEVEL) * 100) + "%";
+  document.getElementById("streak-text").textContent = formatStreak(state.streakDay);
 }
 
 function renderSelfTalkLine() {
@@ -331,15 +373,28 @@ function renderRoleGrid() {
     btn.addEventListener("click", () => showRole(roleKey));
     grid.appendChild(btn);
   });
+
+  if (selectedRole && roles[selectedRole]) {
+    displayRoleResult(selectedRole);
+  } else {
+    document.getElementById("archetype-result").classList.add("hidden");
+    document.getElementById("archetype-placeholder").classList.remove("hidden");
+  }
 }
 
-function showRole(roleKey) {
-  selectedRole = roleKey;
+function displayRoleResult(roleKey) {
   const data = translations[currentLang].home.games[currentGame].roles[roleKey];
   document.getElementById("archetype-before").textContent = data.before;
   document.getElementById("archetype-after").textContent = data.after;
   document.getElementById("archetype-result").classList.remove("hidden");
   document.getElementById("archetype-placeholder").classList.add("hidden");
+}
+
+function showRole(roleKey) {
+  selectedRole = roleKey;
+  state.rolesByGame[currentGame] = roleKey;
+  saveState();
+  displayRoleResult(roleKey);
   document.querySelectorAll(".archetype-chip").forEach((chip) => {
     chip.classList.toggle("selected", chip.dataset.role === roleKey);
   });
@@ -348,19 +403,22 @@ function showRole(roleKey) {
 
 function selectGame(gameKey) {
   currentGame = gameKey;
-  selectedRole = null;
+  selectedRole = state.rolesByGame[currentGame] || null;
+  state.game = gameKey;
+  saveState();
   document.querySelectorAll(".game-row").forEach((row) => {
     row.classList.toggle("selected", row.dataset.game === gameKey);
   });
+  renderRoleGrid();
+  updateFlowNav();
 }
 
 function toggleLanguage() {
   currentLang = currentLang === "en" ? "ko" : "en";
-  const roleToRestore = selectedRole;
   applyTranslations();
   renderSelfTalkLine();
   renderFlowStep();
-  if (roleToRestore) showRole(roleToRestore);
+  updateStatsUI();
 }
 
 function showScreen(id) {
@@ -408,9 +466,19 @@ function updateFlowNav() {
   nextBtn.disabled = stepId === "role" && !selectedRole;
 }
 
+function finishCheckin() {
+  state.streakDay += 1;
+  state.xpTotal += XP_PER_CHECKIN;
+  saveState();
+  updateStatsUI();
+  document.getElementById("summary-xp-value").textContent = "+" + XP_PER_CHECKIN;
+  document.getElementById("summary-streak-value").textContent = formatStreak(state.streakDay);
+  showScreen("screen-summary");
+}
+
 function goFlowNext() {
   if (currentStepIndex === STEPS.length - 1) {
-    showScreen("screen-summary");
+    finishCheckin();
     return;
   }
   currentStepIndex += 1;
@@ -430,6 +498,23 @@ function startCheckin() {
   currentStepIndex = 0;
   showScreen("screen-flow");
   renderFlowStep();
+}
+
+function restoreUIFromState() {
+  // Mood
+  document.querySelectorAll(".mood-tile").forEach((tile) => {
+    tile.classList.toggle("selected", tile.dataset.mood === state.mood);
+  });
+  // Game
+  document.querySelectorAll(".game-row").forEach((row) => {
+    row.classList.toggle("selected", row.dataset.game === state.game);
+  });
+  // Checklist
+  document.querySelectorAll('#checklist input[type="checkbox"]').forEach((input) => {
+    const idx = Number(input.dataset.index);
+    input.checked = !!state.checklist[idx];
+  });
+  updateStatsUI();
 }
 
 // --- self-talk phase tabs + cycling lines ---
@@ -458,6 +543,14 @@ document.getElementById("btn-flow-next").addEventListener("click", goFlowNext);
 document.getElementById("btn-flow-back").addEventListener("click", goFlowBack);
 document.getElementById("btn-back-home").addEventListener("click", () => showScreen("screen-home"));
 document.getElementById("btn-share").addEventListener("click", () => showScreen("screen-home"));
+document.getElementById("btn-reset-demo").addEventListener("click", () => {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (e) {
+    // ignore
+  }
+  location.reload();
+});
 
 // Toggle option selection state on the onboarding screen (visual only, no persistence).
 document.querySelectorAll(".option").forEach((opt) => {
@@ -481,13 +574,25 @@ document.querySelectorAll(".chip-tile").forEach((chip) => {
   chip.addEventListener("click", () => chip.classList.toggle("selected"));
 });
 
-// Toggle mood selection (single-select, visual only).
+// Mood selection (single-select, persisted).
 document.querySelectorAll(".mood-tile").forEach((tile) => {
   tile.addEventListener("click", () => {
     document.querySelectorAll(".mood-tile").forEach((t) => t.classList.remove("selected"));
     tile.classList.add("selected");
+    state.mood = tile.dataset.mood;
+    saveState();
+  });
+});
+
+// Checklist items (persisted).
+document.querySelectorAll('#checklist input[type="checkbox"]').forEach((input) => {
+  input.addEventListener("change", () => {
+    const idx = Number(input.dataset.index);
+    state.checklist[idx] = input.checked;
+    saveState();
   });
 });
 
 applyTranslations();
 renderSelfTalkLine();
+restoreUIFromState();
