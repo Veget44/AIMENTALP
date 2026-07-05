@@ -123,22 +123,24 @@
         </div>
       </div>
 
-      <!-- PICK-STYLE SELF-TALK: pre-match mindset select, esports-inspired -->
+      <!-- PICK-STYLE SELF-TALK: pre-match role select, tailored per game -->
       <div class="card panel-cut accent-violet">
         <div class="row-between muted-xs" style="margin-bottom:2px;">
           <span data-i18n="home.pick_label"></span>
           <span class="mono-tag violet" data-i18n="home.pick_xp"></span>
         </div>
-        <p class="muted-xs" style="margin-bottom:10px;" data-i18n="home.pick_hint"></p>
+        <p class="muted-xs" style="margin-bottom:12px;" data-i18n="home.pick_hint"></p>
 
-        <div class="archetype-grid" id="archetype-grid">
-          <button class="archetype-chip" data-archetype="warrior"><i class="ti ti-sword"></i><span data-i18n="home.archetypes.warrior.name"></span></button>
-          <button class="archetype-chip" data-archetype="guardian"><i class="ti ti-shield"></i><span data-i18n="home.archetypes.guardian.name"></span></button>
-          <button class="archetype-chip" data-archetype="trickster"><i class="ti ti-chess-knight"></i><span data-i18n="home.archetypes.trickster.name"></span></button>
-          <button class="archetype-chip" data-archetype="phoenix"><i class="ti ti-feather"></i><span data-i18n="home.archetypes.phoenix.name"></span></button>
-          <button class="archetype-chip" data-archetype="scout"><i class="ti ti-binoculars"></i><span data-i18n="home.archetypes.scout.name"></span></button>
-          <button class="archetype-chip" data-archetype="anchor"><i class="ti ti-anchor"></i><span data-i18n="home.archetypes.anchor.name"></span></button>
+        <p class="mini-label" data-i18n="home.game_label"></p>
+        <div class="game-selector" id="game-selector">
+          <button class="game-chip selected" data-game="lol" data-i18n="home.games.lol.label"></button>
+          <button class="game-chip" data-game="valorant" data-i18n="home.games.valorant.label"></button>
+          <button class="game-chip" data-game="traditional" data-i18n="home.games.traditional.label"></button>
+          <button class="game-chip" data-game="other" data-i18n="home.games.other.label"></button>
         </div>
+
+        <p class="mini-label" data-i18n="home.role_label"></p>
+        <div class="archetype-grid" id="archetype-grid"></div>
 
         <div id="archetype-result" class="archetype-result hidden">
           <p class="reframe-before" id="archetype-before"></p>
