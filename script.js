@@ -1,5 +1,4 @@
 // Translation content for the two supported languages.
-// Add more languages here later by adding another top-level key.
 const translations = {
   en: {
     meta: { top_label: "concept prototype · live preview" },
@@ -52,17 +51,52 @@ const translations = {
       },
       try_another: "try another",
       this_helped: "this helped · claim xp",
-      pick_label: "pick your mindset · pre-match",
+      pick_label: "pick your role self-talk · pre-match",
       pick_xp: "+15 xp",
-      pick_hint: "Like a champion pick — choose the mindset you need right now.",
-      pick_placeholder: "Pick one above to see your reframe.",
-      archetypes: {
-        warrior: { name: "warrior", before: "\u201cI already threw the last fight.\u201d", after: "\u201cThe last fight is over. This one hasn't started \u2014 I show up for it.\u201d" },
-        guardian: { name: "guardian", before: "\u201cMy shield cracked, I'm exposed now.\u201d", after: "\u201cA crack isn't a break. I hold the line anyway.\u201d" },
-        trickster: { name: "trickster", before: "\u201cThey read my last move, I'm predictable.\u201d", after: "\u201cOne read isn't a pattern. I adapt faster than they can punish.\u201d" },
-        phoenix: { name: "phoenix", before: "\u201cI'm burned out, there's nothing left.\u201d", after: "\u201cBroken doesn't mean gone. I rebuild mid-fight if I have to.\u201d" },
-        scout: { name: "scout", before: "\u201cI missed the signs, I'm always behind.\u201d", after: "\u201cI don't need every signal. I need the next one.\u201d" },
-        anchor: { name: "anchor", before: "\u201cEveryone's watching, I can't think straight.\u201d", after: "\u201cThe crowd is noise. My breath is the only signal I follow.\u201d" },
+      pick_hint: "Choose your game, then the role you're playing today.",
+      pick_placeholder: "Pick a role above to see your reframe.",
+      game_label: "your game",
+      role_label: "your role today",
+      games: {
+        lol: {
+          label: "League of Legends",
+          roles: {
+            top: { name: "top", before: "\u201cI'm losing my lane, the game is over.\u201d", after: "\u201cOne lane isn't the game. I play for the map, not just my lane.\u201d" },
+            jungle: { name: "jungle", before: "\u201cBoth lanes are behind, it's on me.\u201d", after: "\u201cI can't be in two places at once. I make the next path count.\u201d" },
+            mid: { name: "mid", before: "\u201cI need to carry this whole game myself.\u201d", after: "\u201cI don't have to win it alone. I win my moments.\u201d" },
+            adc: { name: "adc", before: "\u201cI have no peel, I can't do anything.\u201d", after: "\u201cI play the fights I can win, and wait for the ones I can't.\u201d" },
+            support: { name: "support", before: "\u201cNo one sees what I actually do.\u201d", after: "\u201cThe scoreboard doesn't show vision, saves, or timing. I know my value.\u201d" },
+          },
+        },
+        valorant: {
+          label: "Valorant",
+          roles: {
+            duelist: { name: "duelist", before: "\u201cI died first again, I threw the round.\u201d", after: "\u201cOne entry doesn't decide the round. My team plays off what I learned.\u201d" },
+            controller: { name: "controller", before: "\u201cI wasted my smokes, we're exposed.\u201d", after: "\u201cOne line isn't the whole round. I still have control to give.\u201d" },
+            initiator: { name: "initiator", before: "\u201cI didn't get the read, we're walking in blind.\u201d", after: "\u201cOne missed read isn't a blind team. I adjust with what I have.\u201d" },
+            sentinel: { name: "sentinel", before: "\u201cThey flanked through me, it's my fault.\u201d", after: "\u201cOne flank isn't a broken site. I reset and hold again.\u201d" },
+          },
+        },
+        traditional: {
+          label: "Traditional sport",
+          roles: {
+            attacker: { name: "attacker", before: "\u201cI missed that chance, I'm not a finisher.\u201d", after: "\u201cOne miss doesn't erase my instincts. The next chance is what matters.\u201d" },
+            midfielder: { name: "midfielder", before: "\u201cI'm running everywhere and it's not enough.\u201d", after: "\u201cThe pass no one sees still moves the game forward.\u201d" },
+            defender: { name: "defender", before: "\u201cThat mistake cost us a goal.\u201d", after: "\u201cOne mistake ends when play moves on. I refocus on the next ball.\u201d" },
+            goalkeeper: { name: "goalkeeper", before: "\u201cEveryone saw that mistake, I let the team down.\u201d", after: "\u201cI don't need a clean sheet to be doing my job right now. I make the next save.\u201d" },
+          },
+        },
+        other: {
+          label: "other / generic",
+          roles: {
+            warrior: { name: "warrior", before: "\u201cI already threw the last fight.\u201d", after: "\u201cThe last fight is over. This one hasn't started \u2014 I show up for it.\u201d" },
+            guardian: { name: "guardian", before: "\u201cMy shield cracked, I'm exposed now.\u201d", after: "\u201cA crack isn't a break. I hold the line anyway.\u201d" },
+            trickster: { name: "trickster", before: "\u201cThey read my last move, I'm predictable.\u201d", after: "\u201cOne read isn't a pattern. I adapt faster than they can punish.\u201d" },
+            phoenix: { name: "phoenix", before: "\u201cI'm burned out, there's nothing left.\u201d", after: "\u201cBroken doesn't mean gone. I rebuild mid-fight if I have to.\u201d" },
+            scout: { name: "scout", before: "\u201cI missed the signs, I'm always behind.\u201d", after: "\u201cI don't need every signal. I need the next one.\u201d" },
+            anchor: { name: "anchor", before: "\u201cEveryone's watching, I can't think straight.\u201d", after: "\u201cThe crowd is noise. My breath is the only signal I follow.\u201d" },
+          },
+        },
       },
       checklist_label: "before you start",
       checklist_items: [
@@ -149,17 +183,52 @@ const translations = {
       },
       try_another: "다른 문구 보기",
       this_helped: "도움이 됐어요 · xp 받기",
-      pick_label: "오늘의 마인드 픽 · 경기 전",
+      pick_label: "역할별 셀프토크 · 경기 전",
       pick_xp: "+15 xp",
-      pick_hint: "밴픽처럼, 지금 나에게 필요한 마인드를 골라보세요.",
-      pick_placeholder: "위에서 하나를 선택하면 리프레임 문구가 보여요.",
-      archetypes: {
-        warrior: { name: "전사", before: "\u201c저번 판은 이미 망쳤어.\u201d", after: "\u201c저번 판은 끝났고, 이번 판은 아직 시작도 안 했어. 나는 이번 판에 나선다.\u201d" },
-        guardian: { name: "수호자", before: "\u201c방패에 금이 갔어, 이제 뚫렸어.\u201d", after: "\u201c금이 갔다고 부서진 건 아니야. 그래도 자리는 지킨다.\u201d" },
-        trickster: { name: "책사", before: "\u201c그때 그 수를 읽혔어, 나는 뻔해.\u201d", after: "\u201c한 번 읽혔다고 패턴이 되는 건 아니야. 나는 더 빠르게 바꾼다.\u201d" },
-        phoenix: { name: "불사조", before: "\u201c다 타버렸어, 더는 남은 게 없어.\u201d", after: "\u201c부러진 건 사라진 게 아니야. 싸우는 중에도 다시 붙이면 돼.\u201d" },
-        scout: { name: "정찰병", before: "\u201c신호를 놓쳤어, 나는 항상 뒤처져.\u201d", after: "\u201c모든 신호를 다 볼 필요는 없어. 다음 신호 하나면 충분해.\u201d" },
-        anchor: { name: "닻", before: "\u201c다들 보고 있어, 생각이 하나도 안 나.\u201d", after: "\u201c관중은 소음일 뿐이야. 내가 따라갈 신호는 내 호흡 하나뿐이다.\u201d" },
+      pick_hint: "먼저 게임을 고르고, 오늘 맡은 역할을 선택하세요.",
+      pick_placeholder: "위에서 역할을 선택하면 리프레임 문구가 보여요.",
+      game_label: "게임 선택",
+      role_label: "오늘의 역할",
+      games: {
+        lol: {
+          label: "리그 오브 레전드",
+          roles: {
+            top: { name: "탑", before: "\u201c라인전에서 밀렸어, 게임은 끝났어.\u201d", after: "\u201c라인 하나가 게임 전체는 아니야. 나는 맵 전체를 본다.\u201d" },
+            jungle: { name: "정글", before: "\u201c양쪽 라인이 다 터졌어, 내 책임이야.\u201d", after: "\u201c동시에 두 곳에 있을 순 없어. 다음 동선을 제대로 만든다.\u201d" },
+            mid: { name: "미드", before: "\u201c이 게임은 나 혼자 다 캐리해야 해.\u201d", after: "\u201c혼자 다 이길 필요 없어. 내 순간들을 이긴다.\u201d" },
+            adc: { name: "원딜", before: "\u201c보호를 못 받아서 아무것도 할 수 없어.\u201d", after: "\u201c이길 수 있는 싸움만 골라서 한다. 나머진 기다린다.\u201d" },
+            support: { name: "서포터", before: "\u201c내가 뭘 하는지 아무도 몰라줘.\u201d", after: "\u201c스코어보드엔 안 보이지만 시야, 세이브, 타이밍은 내가 안다.\u201d" },
+          },
+        },
+        valorant: {
+          label: "발로란트",
+          roles: {
+            duelist: { name: "듀얼리스트", before: "\u201c또 먼저 죽었어, 라운드를 던졌어.\u201d", after: "\u201c한 번의 진입이 라운드를 결정하지 않아. 팀은 내가 얻은 정보로 플레이한다.\u201d" },
+            controller: { name: "컨트롤러", before: "\u201c스모크를 낭비했어, 우리 다 노출됐어.\u201d", after: "\u201c한 번의 실수가 라운드 전부는 아니야. 아직 컨트롤할 게 남아있다.\u201d" },
+            initiator: { name: "이니시에이터", before: "\u201c정보를 못 따냈어, 팀이 눈 감고 들어가.\u201d", after: "\u201c한 번 놓쳤다고 팀이 무너진 건 아니야. 있는 정보로 조정한다.\u201d" },
+            sentinel: { name: "센티널", before: "\u201c저 플랭크를 뚫렸어, 내 잘못이야.\u201d", after: "\u201c플랭크 한 번이 사이트 전체는 아니야. 다시 자리를 잡는다.\u201d" },
+          },
+        },
+        traditional: {
+          label: "전통 스포츠",
+          roles: {
+            attacker: { name: "공격수", before: "\u201c그 찬스를 놓쳤어, 나는 결정력이 없어.\u201d", after: "\u201c한 번의 실축이 내 감각을 지우진 않아. 다음 찬스가 중요하다.\u201d" },
+            midfielder: { name: "미드필더", before: "\u201c이렇게 뛰는데도 부족해.\u201d", after: "\u201c아무도 못 본 패스도 경기를 앞으로 나아가게 한다.\u201d" },
+            defender: { name: "수비수", before: "\u201c그 실수가 실점으로 이어졌어.\u201d", after: "\u201c실수는 휘슬이 울리면 끝난다. 다음 볼에 다시 집중한다.\u201d" },
+            goalkeeper: { name: "골키퍼", before: "\u201c다들 그 실수를 봤어, 팀을 실망시켰어.\u201d", after: "\u201c지금 무실점이 아니어도 내 역할은 여전히 유효하다. 다음 선방을 만든다.\u201d" },
+          },
+        },
+        other: {
+          label: "기타 / 범용",
+          roles: {
+            warrior: { name: "전사", before: "\u201c저번 판은 이미 망쳤어.\u201d", after: "\u201c저번 판은 끝났고, 이번 판은 아직 시작도 안 했어. 나는 이번 판에 나선다.\u201d" },
+            guardian: { name: "수호자", before: "\u201c방패에 금이 갔어, 이제 뚫렸어.\u201d", after: "\u201c금이 갔다고 부서진 건 아니야. 그래도 자리는 지킨다.\u201d" },
+            trickster: { name: "책사", before: "\u201c그때 그 수를 읽혔어, 나는 뻔해.\u201d", after: "\u201c한 번 읽혔다고 패턴이 되는 건 아니야. 나는 더 빠르게 바꾼다.\u201d" },
+            phoenix: { name: "불사조", before: "\u201c다 타버렸어, 더는 남은 게 없어.\u201d", after: "\u201c부러진 건 사라진 게 아니야. 싸우는 중에도 다시 붙이면 돼.\u201d" },
+            scout: { name: "정찰병", before: "\u201c신호를 놓쳤어, 나는 항상 뒤처져.\u201d", after: "\u201c모든 신호를 다 볼 필요는 없어. 다음 신호 하나면 충분해.\u201d" },
+            anchor: { name: "닻", before: "\u201c다들 보고 있어, 생각이 하나도 안 나.\u201d", after: "\u201c관중은 소음일 뿐이야. 내가 따라갈 신호는 내 호흡 하나뿐이다.\u201d" },
+          },
+        },
       },
       checklist_label: "시작 전 체크리스트",
       checklist_items: [
@@ -197,10 +266,19 @@ const translations = {
   },
 };
 
+// Role icons are language-independent, so they live outside the translation tree.
+const roleIcons = {
+  lol: { top: "ti-sword", jungle: "ti-trees", mid: "ti-bolt", adc: "ti-target", support: "ti-shield-heart" },
+  valorant: { duelist: "ti-crosshair", controller: "ti-cloud", initiator: "ti-eye", sentinel: "ti-shield-lock" },
+  traditional: { attacker: "ti-target-arrow", midfielder: "ti-repeat", defender: "ti-shield", goalkeeper: "ti-hand-stop" },
+  other: { warrior: "ti-sword", guardian: "ti-shield", trickster: "ti-chess-knight", phoenix: "ti-feather", scout: "ti-binoculars", anchor: "ti-anchor" },
+};
+
 let currentLang = "en";
 let currentPhase = "pre";
 let phaseLineIndex = { pre: 0, mid: 0, recovery: 0 };
-let selectedArchetype = null;
+let currentGame = "lol";
+let selectedRole = null;
 
 function applyTranslations() {
   const dict = translations[currentLang];
@@ -219,11 +297,53 @@ function renderSelfTalkLine() {
   document.getElementById("selftalk-line").textContent = lines[idx];
 }
 
+// --- pick-style self-talk: game selector + role grid rendered per game ---
+function renderRoleGrid() {
+  const grid = document.getElementById("archetype-grid");
+  grid.innerHTML = "";
+  const roles = translations[currentLang].home.games[currentGame].roles;
+  Object.keys(roles).forEach((roleKey) => {
+    const btn = document.createElement("button");
+    btn.className = "archetype-chip";
+    btn.dataset.role = roleKey;
+    const icon = roleIcons[currentGame][roleKey] || "ti-user";
+    btn.innerHTML = '<i class="ti ' + icon + '"></i><span>' + roles[roleKey].name + "</span>";
+    btn.addEventListener("click", () => showRole(roleKey));
+    grid.appendChild(btn);
+  });
+  // Reset the result panel whenever the role list changes (new game selected).
+  selectedRole = null;
+  document.getElementById("archetype-result").classList.add("hidden");
+  document.getElementById("archetype-placeholder").classList.remove("hidden");
+}
+
+function showRole(roleKey) {
+  selectedRole = roleKey;
+  const data = translations[currentLang].home.games[currentGame].roles[roleKey];
+  document.getElementById("archetype-before").textContent = data.before;
+  document.getElementById("archetype-after").textContent = data.after;
+  document.getElementById("archetype-result").classList.remove("hidden");
+  document.getElementById("archetype-placeholder").classList.add("hidden");
+  document.querySelectorAll(".archetype-chip").forEach((chip) => {
+    chip.classList.toggle("selected", chip.dataset.role === roleKey);
+  });
+}
+
+function selectGame(gameKey) {
+  currentGame = gameKey;
+  document.querySelectorAll(".game-chip").forEach((chip) => {
+    chip.classList.toggle("selected", chip.dataset.game === gameKey);
+  });
+  renderRoleGrid();
+}
+
 function toggleLanguage() {
   currentLang = currentLang === "en" ? "ko" : "en";
+  const roleToRestore = selectedRole;
   applyTranslations();
   renderSelfTalkLine();
-  if (selectedArchetype) showArchetype(selectedArchetype);
+  renderRoleGrid();
+  if (roleToRestore) showRole(roleToRestore);
 }
 
 function showScreen(id) {
@@ -246,21 +366,8 @@ document.getElementById("btn-try-another").addEventListener("click", () => {
   renderSelfTalkLine();
 });
 
-// --- pick-style self-talk (esports-inspired mindset picker) ---
-function showArchetype(key) {
-  selectedArchetype = key;
-  const data = translations[currentLang].home.archetypes[key];
-  document.getElementById("archetype-before").textContent = data.before;
-  document.getElementById("archetype-after").textContent = data.after;
-  document.getElementById("archetype-result").classList.remove("hidden");
-  document.getElementById("archetype-placeholder").classList.add("hidden");
-  document.querySelectorAll(".archetype-chip").forEach((chip) => {
-    chip.classList.toggle("selected", chip.dataset.archetype === key);
-  });
-}
-
-document.querySelectorAll(".archetype-chip").forEach((chip) => {
-  chip.addEventListener("click", () => showArchetype(chip.dataset.archetype));
+document.querySelectorAll(".game-chip").forEach((chip) => {
+  chip.addEventListener("click", () => selectGame(chip.dataset.game));
 });
 
 document.getElementById("lang-toggle").addEventListener("click", toggleLanguage);
@@ -300,3 +407,4 @@ document.querySelectorAll(".mood-tile").forEach((tile) => {
 
 applyTranslations();
 renderSelfTalkLine();
+renderRoleGrid();
