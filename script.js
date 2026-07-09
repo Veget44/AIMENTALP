@@ -1,5 +1,5 @@
 // Bumped by +1 on every deploy so it's easy to confirm which version is live.
-const BUILD_NUMBER = 3;
+const BUILD_NUMBER = 4;
 
 // Translation content for the two supported languages.
 const translations = {
@@ -141,6 +141,10 @@ const translations = {
       custom_text_placeholder: "write the line in your own words...",
       save: "save",
       empty_custom: "You haven't written any of your own lines yet.",
+    },
+    quotecard: {
+      copy: "copy text",
+      copied: "copied!",
     },
     summary: {
       title: "Today's check-in complete",
@@ -301,6 +305,10 @@ const translations = {
       custom_text_placeholder: "나만의 말로 문구를 적어보세요...",
       save: "저장",
       empty_custom: "아직 직접 작성한 문구가 없어요.",
+    },
+    quotecard: {
+      copy: "문구 복사하기",
+      copied: "복사됨!",
     },
     summary: {
       title: "오늘의 체크인 완료",
@@ -510,6 +518,9 @@ function toggleLanguage() {
   if (document.getElementById("screen-favorites").classList.contains("active")) {
     renderFavoritesScreen();
   }
+  if (document.getElementById("screen-quotecard").classList.contains("active")) {
+    document.getElementById("btn-copy-quote-label").textContent = translations[currentLang].quotecard.copy;
+  }
 }
 
 function showScreen(id) {
@@ -686,6 +697,11 @@ function renderFavoritesScreen() {
         "</p>" +
         (note ? '<p class="saved-item-note"><i class="ti ti-corner-down-right"></i> ' + escapeHtml(note) + "</p>" : "") +
         "</div>";
+      const cardBtn = document.createElement("button");
+      cardBtn.className = "saved-item-quote-btn";
+      cardBtn.innerHTML = '<i class="ti ti-quote"></i>';
+      cardBtn.addEventListener("click", () => showQuoteCard(lines[idx], phaseLabels[phase]));
+      item.appendChild(cardBtn);
       selftalkList.appendChild(item);
     });
   });
@@ -715,6 +731,11 @@ function renderFavoritesScreen() {
       "</p>" +
       (note ? '<p class="saved-item-note"><i class="ti ti-corner-down-right"></i> ' + escapeHtml(note) + "</p>" : "") +
       "</div>";
+    const cardBtn = document.createElement("button");
+    cardBtn.className = "saved-item-quote-btn";
+    cardBtn.innerHTML = '<i class="ti ti-quote"></i>';
+    cardBtn.addEventListener("click", () => showQuoteCard(gameData.roles[role].after, gameData.label + " · " + gameData.roles[role].name));
+    item.appendChild(cardBtn);
     rolesList.appendChild(item);
   });
   if (!anyRoles) {
@@ -737,6 +758,11 @@ function renderFavoritesScreen() {
         "</p>" +
         (entry.note ? '<p class="saved-item-note"><i class="ti ti-corner-down-right"></i> ' + escapeHtml(entry.note) + "</p>" : "") +
         "</div>";
+      const cardBtn = document.createElement("button");
+      cardBtn.className = "saved-item-quote-btn";
+      cardBtn.innerHTML = '<i class="ti ti-quote"></i>';
+      cardBtn.addEventListener("click", () => showQuoteCard(entry.text, phaseLabels[entry.phase] || entry.phase));
+      item.appendChild(cardBtn);
       const delBtn = document.createElement("button");
       delBtn.className = "saved-item-delete";
       delBtn.innerHTML = '<i class="ti ti-x"></i>';
@@ -755,6 +781,38 @@ function showFavorites() {
   renderFavoritesScreen();
   showScreen("screen-favorites");
 }
+
+// --- quote card: render a saved line as a shareable "wise saying" style card ---
+let currentQuoteText = "";
+let currentQuoteTag = "";
+
+function showQuoteCard(text, tag) {
+  currentQuoteText = text;
+  currentQuoteTag = tag;
+  document.getElementById("quotecard-text").textContent = text;
+  document.getElementById("quotecard-tag").textContent = tag;
+  document.getElementById("btn-copy-quote-label").textContent = translations[currentLang].quotecard.copy;
+  showScreen("screen-quotecard");
+}
+
+document.getElementById("btn-copy-quote").addEventListener("click", () => {
+  const fullText = currentQuoteText + " \u2014 " + currentQuoteTag;
+  const label = document.getElementById("btn-copy-quote-label");
+  const restoreLabel = () => {
+    label.textContent = translations[currentLang].quotecard.copy;
+  };
+  const showCopied = () => {
+    label.textContent = translations[currentLang].quotecard.copied;
+    setTimeout(restoreLabel, 1500);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(fullText).then(showCopied).catch(() => {
+      // Clipboard permission denied or unavailable — the text is still visible on the card itself.
+    });
+  }
+});
+
+document.getElementById("btn-quotecard-back").addEventListener("click", showFavorites);
 
 document.getElementById("btn-to-favorites").addEventListener("click", showFavorites);
 document.getElementById("btn-favorites-back").addEventListener("click", () => showScreen("screen-home"));
