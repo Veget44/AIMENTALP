@@ -449,6 +449,35 @@ h1 {
 }
 .saved-item-delete:hover { color: var(--coral); }
 
+.saved-item-quote-btn {
+  background: none; border: none; color: var(--text-muted); cursor: pointer;
+  font-size: 15px; padding: 0; flex-shrink: 0;
+}
+.saved-item-quote-btn:hover { color: var(--sky); }
+
+.quote-card {
+  background: var(--surface-raised);
+  border-radius: 16px;
+  padding: 40px 28px 28px;
+  margin: 10px 0 18px;
+  text-align: center;
+  min-height: 280px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.quote-mark { font-size: 30px; color: var(--sage); opacity: 0.55; margin-bottom: 14px; }
+.quote-card-text {
+  font-family: "Sora", "Noto Serif KR", serif;
+  font-weight: 600;
+  font-size: 19px; line-height: 1.5;
+  color: var(--text-primary);
+  margin: 0 0 20px;
+}
+.quote-card-divider { width: 36px; height: 2px; background: var(--amber); margin: 0 0 12px; }
+.quote-card-tag {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-muted); margin: 0;
+}
+
 @media (max-width: 400px) {
   .phone-frame { margin: 10px 8px 40px; max-width: none; }
   .hud-topbar { max-width: none; padding: 14px 10px 0; }
