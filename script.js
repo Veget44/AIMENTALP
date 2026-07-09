@@ -1,5 +1,5 @@
 // Bumped by +1 on every deploy so it's easy to confirm which version is live.
-const BUILD_NUMBER = 4;
+const BUILD_NUMBER = 5;
 
 // Translation content for the two supported languages.
 const translations = {
@@ -141,6 +141,8 @@ const translations = {
       custom_text_placeholder: "write the line in your own words...",
       save: "save",
       empty_custom: "You haven't written any of your own lines yet.",
+      wisdom_section: "words from history",
+      wisdom_hint: "A few lines that have outlasted their authors by a long time.",
     },
     quotecard: {
       copy: "copy text",
@@ -305,6 +307,8 @@ const translations = {
       custom_text_placeholder: "나만의 말로 문구를 적어보세요...",
       save: "저장",
       empty_custom: "아직 직접 작성한 문구가 없어요.",
+      wisdom_section: "역사 속 문구",
+      wisdom_hint: "저자보다 훨씬 오래 살아남은 몇 줄의 말들.",
     },
     quotecard: {
       copy: "문구 복사하기",
@@ -341,6 +345,25 @@ const roleIcons = {
   other: { starter: "ti-flag", steady: "ti-scale", adapter: "ti-refresh", closer: "ti-target", communicator: "ti-message-circle", recoverer: "ti-battery-charging" },
 };
 
+// Public-domain quotes only, verified against their original out-of-copyright translations
+// (not the popular modern paraphrases that circulate online under the same names).
+const WISDOM_QUOTES = [
+  {
+    text: "An obstacle on the road helps us along this road.",
+    tagEn: "Marcus Aurelius \u00b7 Meditations (trans. Long, 1862)",
+    tagKo: "마르쿠스 아우렐리우스 · 명상록",
+  },
+  {
+    text: "What does not kill me, strengthens me.",
+    tagEn: "Friedrich Nietzsche \u00b7 Twilight of the Idols (trans. Common, 1896)",
+    tagKo: "프리드리히 니체 · 우상의 황혼",
+  },
+  {
+    text: "The credit belongs to the man who is actually in the arena.",
+    tagEn: "Theodore Roosevelt \u00b7 \u201cCitizenship in a Republic,\u201d 1910",
+    tagKo: "시어도어 루스벨트 · “공화국의 시민권” 연설, 1910",
+  },
+];
 
 // --- persistence: keep mood / game / role / checklist / streak / xp across reloads ---
 const STORAGE_KEY = "aimentalp_demo_state_v1";
@@ -775,6 +798,26 @@ function renderFavoritesScreen() {
       customList.appendChild(item);
     });
   }
+
+  const wisdomList = document.getElementById("favorites-wisdom-list");
+  wisdomList.innerHTML = "";
+  WISDOM_QUOTES.forEach((q) => {
+    const tag = currentLang === "ko" ? q.tagKo : q.tagEn;
+    const item = document.createElement("div");
+    item.className = "saved-item";
+    item.innerHTML =
+      '<i class="ti ti-feather"></i><div class="saved-item-text"><p class="saved-item-tag">' +
+      escapeHtml(tag) +
+      '</p><p class="saved-item-line">' +
+      escapeHtml(q.text) +
+      "</p></div>";
+    const cardBtn = document.createElement("button");
+    cardBtn.className = "saved-item-quote-btn";
+    cardBtn.innerHTML = '<i class="ti ti-quote"></i>';
+    cardBtn.addEventListener("click", () => showQuoteCard(q.text, tag));
+    item.appendChild(cardBtn);
+    wisdomList.appendChild(item);
+  });
 }
 
 function showFavorites() {
