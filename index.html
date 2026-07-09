@@ -104,6 +104,10 @@
       </button>
       <p class="muted-xs center-text" data-i18n="home.start_checkin_hint"></p>
 
+      <button class="secondary-button full-width" id="btn-to-favorites" style="margin-top:14px;">
+        <i class="ti ti-heart"></i> <span data-i18n="home.favorites_button"></span>
+      </button>
+
       <div class="card panel-cut" style="margin-top:22px;">
         <div class="row-between" style="margin-bottom:8px;">
           <span class="section-label" style="margin:0;" data-i18n="home.community_label"></span>
@@ -188,6 +192,10 @@
           <p class="reframe-before" id="archetype-before"></p>
           <div class="reframe-arrow"><i class="ti ti-arrow-down"></i></div>
           <p class="reframe-after" id="archetype-after"></p>
+          <button class="favorite-button" id="btn-favorite-role">
+            <i class="ti ti-heart"></i>
+            <span data-i18n="flow.save_this"></span>
+          </button>
         </div>
         <p class="muted-xs archetype-placeholder" id="archetype-placeholder" data-i18n="flow.role_placeholder"></p>
       </div>
@@ -202,7 +210,13 @@
         </div>
         <div class="card panel-cut accent-amber">
           <p class="selftalk-line" id="selftalk-line"></p>
-          <button class="secondary-button full-width" id="btn-try-another" data-i18n="home.try_another"></button>
+          <div class="row-gap">
+            <button class="secondary-button" id="btn-try-another" data-i18n="home.try_another"></button>
+            <button class="favorite-button" id="btn-favorite-selftalk">
+              <i class="ti ti-heart"></i>
+              <span data-i18n="flow.save_this"></span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -232,6 +246,32 @@
         <button class="secondary-button" id="btn-flow-back" data-i18n="flow.back"></button>
         <button class="primary-button" id="btn-flow-next"></button>
       </div>
+    </section>
+
+    <!-- SCREEN: saved lines (favorites) — what the performer AND their coach could review -->
+    <section id="screen-favorites" class="screen">
+      <div class="hud-header panel-cut">
+        <div class="row-gap">
+          <div class="icon-tile"><i class="ti ti-heart"></i></div>
+          <div>
+            <p class="title-sm" data-i18n="favorites.title"></p>
+            <p class="muted-xs" data-i18n="favorites.subtitle"></p>
+          </div>
+        </div>
+      </div>
+
+      <p class="section-label" data-i18n="favorites.selftalk_section"></p>
+      <div id="favorites-selftalk-list"></div>
+
+      <p class="section-label" data-i18n="favorites.roles_section"></p>
+      <div id="favorites-roles-list"></div>
+
+      <div class="card panel-cut coach-note">
+        <i class="ti ti-users muted-icon"></i>
+        <p class="muted-xs" data-i18n="favorites.coach_note"></p>
+      </div>
+
+      <button class="primary-button" id="btn-favorites-back" data-i18n="favorites.back"></button>
     </section>
 
     <!-- SCREEN 4: post-session summary -->
