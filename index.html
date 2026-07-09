@@ -196,6 +196,9 @@
             <i class="ti ti-heart"></i>
             <span data-i18n="flow.save_this"></span>
           </button>
+          <div class="favorite-note hidden" id="role-note-wrap">
+            <input type="text" id="role-note-input" class="note-input" data-i18n-placeholder="flow.note_placeholder">
+          </div>
         </div>
         <p class="muted-xs archetype-placeholder" id="archetype-placeholder" data-i18n="flow.role_placeholder"></p>
       </div>
@@ -216,6 +219,9 @@
               <i class="ti ti-heart"></i>
               <span data-i18n="flow.save_this"></span>
             </button>
+          </div>
+          <div class="favorite-note hidden" id="selftalk-note-wrap">
+            <input type="text" id="selftalk-note-input" class="note-input" data-i18n-placeholder="flow.note_placeholder">
           </div>
         </div>
       </div>
@@ -265,6 +271,25 @@
 
       <p class="section-label" data-i18n="favorites.roles_section"></p>
       <div id="favorites-roles-list"></div>
+
+      <p class="section-label" data-i18n="favorites.custom_section"></p>
+      <div id="favorites-custom-list"></div>
+
+      <button class="secondary-button full-width" id="btn-add-custom">
+        <i class="ti ti-plus"></i> <span data-i18n="favorites.add_custom"></span>
+      </button>
+
+      <div class="card panel-cut hidden" id="custom-line-form">
+        <p class="mini-label" data-i18n="favorites.custom_phase_label"></p>
+        <div class="phase-tabs" id="custom-phase-tabs">
+          <button class="phase-tab selected" data-phase="pre" data-i18n="home.selftalk.tabs.pre"></button>
+          <button class="phase-tab" data-phase="mid" data-i18n="home.selftalk.tabs.mid"></button>
+          <button class="phase-tab" data-phase="recovery" data-i18n="home.selftalk.tabs.recovery"></button>
+        </div>
+        <textarea id="custom-line-text" class="note-input" rows="2" data-i18n-placeholder="favorites.custom_text_placeholder"></textarea>
+        <input type="text" id="custom-line-note" class="note-input" style="margin-top:8px;" data-i18n-placeholder="flow.note_placeholder">
+        <button class="primary-button" id="btn-save-custom" style="margin-top:10px;" data-i18n="favorites.save"></button>
+      </div>
 
       <div class="card panel-cut coach-note">
         <i class="ti ti-users muted-icon"></i>
