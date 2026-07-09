@@ -1,5 +1,5 @@
 // Bumped by +1 on every deploy so it's easy to confirm which version is live.
-const BUILD_NUMBER = 1;
+const BUILD_NUMBER = 2;
 
 // Translation content for the two supported languages.
 const translations = {
@@ -34,6 +34,8 @@ const translations = {
       next: "continue",
       next_selftalk: "this helped · continue",
       next_finish: "finish check-in",
+      save_this: "save this",
+      saved: "saved",
     },
     home: {
       header_title: "Today",
@@ -121,6 +123,17 @@ const translations = {
       ],
       community_footer: "14 people checked in today",
       reset_demo: "reset demo data",
+      favorites_button: "view your saved lines",
+    },
+    favorites: {
+      title: "your saved lines",
+      subtitle: "what you and your coach can review together",
+      selftalk_section: "self-talk you've saved",
+      roles_section: "role reframes you've saved",
+      empty_selftalk: "Nothing saved yet — tap the heart on a self-talk line to keep it here.",
+      empty_roles: "Nothing saved yet — tap the heart on a role reframe to keep it here.",
+      coach_note: "In a real version, your coach would see this same list on their side — so they know which line to remind you of, and when.",
+      back: "back to home",
     },
     summary: {
       title: "Today's check-in complete",
@@ -174,6 +187,8 @@ const translations = {
       next: "계속하기",
       next_selftalk: "도움이 됐어요 · 계속하기",
       next_finish: "체크인 완료하기",
+      save_this: "저장하기",
+      saved: "저장됨",
     },
     home: {
       header_title: "오늘",
@@ -261,6 +276,17 @@ const translations = {
       ],
       community_footer: "오늘 14명이 체크인했어요",
       reset_demo: "데모 데이터 초기화",
+      favorites_button: "저장한 문구 보기",
+    },
+    favorites: {
+      title: "저장한 문구",
+      subtitle: "나와 코치가 함께 확인할 수 있는 문구",
+      selftalk_section: "저장한 셀프토크",
+      roles_section: "저장한 역할별 리프레임",
+      empty_selftalk: "아직 저장한 문구가 없어요 — 셀프토크 문구의 하트를 눌러 저장해보세요.",
+      empty_roles: "아직 저장한 역할 리프레임이 없어요 — 하트를 눌러 저장해보세요.",
+      coach_note: "실제 버전에서는 코치도 같은 목록을 볼 수 있어서, 언제 어떤 문구로 상기시켜줘야 할지 알 수 있어요.",
+      back: "홈으로 돌아가기",
     },
     summary: {
       title: "오늘의 체크인 완료",
@@ -300,13 +326,20 @@ const XP_PER_LEVEL = 400;
 const XP_PER_CHECKIN = 45;
 
 function loadState() {
+  let s = null;
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) s = JSON.parse(raw);
   } catch (e) {
     // localStorage unavailable (private mode, etc.) — fall back to defaults, nothing persists.
   }
-  return { streakDay: 12, xpTotal: 240, mood: "calm", game: "lol", rolesByGame: {}, checklist: [true, false, false] };
+  if (!s) {
+    s = { streakDay: 12, xpTotal: 240, mood: "calm", game: "lol", rolesByGame: {}, checklist: [true, false, false] };
+  }
+  // Fill in favorites for states saved before this feature existed.
+  if (!s.favoriteSelfTalk) s.favoriteSelfTalk = { pre: [false, false, false], mid: [false, false, false], recovery: [false, false, false] };
+  if (!s.favoriteRoles) s.favoriteRoles = {};
+  return s;
 }
 
 function saveState() {
@@ -358,6 +391,25 @@ function renderSelfTalkLine() {
   const lines = translations[currentLang].home.selftalk.lines[currentPhase];
   const idx = phaseLineIndex[currentPhase] % lines.length;
   document.getElementById("selftalk-line").textContent = lines[idx];
+  updateFavoriteButton(
+    document.getElementById("btn-favorite-selftalk"),
+    !!state.favoriteSelfTalk[currentPhase][idx]
+  );
+}
+
+function updateFavoriteButton(btn, isActive) {
+  btn.classList.toggle("active", isActive);
+  const icon = btn.querySelector("i");
+  icon.className = isActive ? "ti ti-heart-filled" : "ti ti-heart";
+  btn.querySelector("span").textContent = isActive ? translations[currentLang].flow.saved : translations[currentLang].flow.save_this;
+}
+
+// If the performer has already saved a favorite line for this phase, lead with it —
+// that's the "surface it at the right time" behavior instead of a random/blank start.
+function jumpToFavoriteOrFirst(phase) {
+  const favs = state.favoriteSelfTalk[phase];
+  const favIdx = favs.findIndex((f) => f);
+  phaseLineIndex[phase] = favIdx >= 0 ? favIdx : 0;
 }
 
 // --- role grid rendered per selected game ---
@@ -392,6 +444,10 @@ function displayRoleResult(roleKey) {
   document.getElementById("archetype-after").textContent = data.after;
   document.getElementById("archetype-result").classList.remove("hidden");
   document.getElementById("archetype-placeholder").classList.add("hidden");
+  updateFavoriteButton(
+    document.getElementById("btn-favorite-role"),
+    !!state.favoriteRoles[currentGame + ":" + roleKey]
+  );
 }
 
 function showRole(roleKey) {
@@ -423,6 +479,9 @@ function toggleLanguage() {
   renderSelfTalkLine();
   renderFlowStep();
   updateStatsUI();
+  if (document.getElementById("screen-favorites").classList.contains("active")) {
+    renderFavoritesScreen();
+  }
 }
 
 function showScreen(id) {
@@ -500,6 +559,9 @@ function goFlowBack() {
 
 function startCheckin() {
   currentStepIndex = 0;
+  currentPhase = "pre";
+  document.querySelectorAll(".phase-tab").forEach((t) => t.classList.toggle("selected", t.dataset.phase === "pre"));
+  jumpToFavoriteOrFirst("pre");
   showScreen("screen-flow");
   renderFlowStep();
 }
@@ -527,6 +589,7 @@ document.querySelectorAll(".phase-tab").forEach((tab) => {
     document.querySelectorAll(".phase-tab").forEach((t) => t.classList.remove("selected"));
     tab.classList.add("selected");
     currentPhase = tab.dataset.phase;
+    jumpToFavoriteOrFirst(currentPhase);
     renderSelfTalkLine();
   });
 });
@@ -536,9 +599,88 @@ document.getElementById("btn-try-another").addEventListener("click", () => {
   renderSelfTalkLine();
 });
 
+document.getElementById("btn-favorite-selftalk").addEventListener("click", () => {
+  const lines = translations[currentLang].home.selftalk.lines[currentPhase];
+  const idx = phaseLineIndex[currentPhase] % lines.length;
+  state.favoriteSelfTalk[currentPhase][idx] = !state.favoriteSelfTalk[currentPhase][idx];
+  saveState();
+  renderSelfTalkLine();
+});
+
+document.getElementById("btn-favorite-role").addEventListener("click", () => {
+  if (!selectedRole) return;
+  const key = currentGame + ":" + selectedRole;
+  state.favoriteRoles[key] = !state.favoriteRoles[key];
+  saveState();
+  displayRoleResult(selectedRole);
+});
+
+function renderFavoritesScreen() {
+  const dict = translations[currentLang];
+  const phaseLabels = dict.home.selftalk.tabs;
+
+  const selftalkList = document.getElementById("favorites-selftalk-list");
+  selftalkList.innerHTML = "";
+  let anySelfTalk = false;
+  ["pre", "mid", "recovery"].forEach((phase) => {
+    const lines = dict.home.selftalk.lines[phase];
+    state.favoriteSelfTalk[phase].forEach((isFav, idx) => {
+      if (!isFav) return;
+      anySelfTalk = true;
+      const item = document.createElement("div");
+      item.className = "saved-item";
+      item.innerHTML =
+        '<i class="ti ti-heart-filled"></i><div class="saved-item-text"><p class="saved-item-tag">' +
+        phaseLabels[phase] +
+        '</p><p class="saved-item-line">' +
+        lines[idx] +
+        "</p></div>";
+      selftalkList.appendChild(item);
+    });
+  });
+  if (!anySelfTalk) {
+    selftalkList.innerHTML = '<p class="saved-empty">' + dict.favorites.empty_selftalk + "</p>";
+  }
+
+  const rolesList = document.getElementById("favorites-roles-list");
+  rolesList.innerHTML = "";
+  let anyRoles = false;
+  Object.keys(state.favoriteRoles).forEach((key) => {
+    if (!state.favoriteRoles[key]) return;
+    const [game, role] = key.split(":");
+    const gameData = dict.home.games[game];
+    if (!gameData || !gameData.roles[role]) return;
+    anyRoles = true;
+    const item = document.createElement("div");
+    item.className = "saved-item";
+    item.innerHTML =
+      '<i class="ti ti-heart-filled"></i><div class="saved-item-text"><p class="saved-item-tag">' +
+      gameData.label +
+      " · " +
+      gameData.roles[role].name +
+      '</p><p class="saved-item-line">' +
+      gameData.roles[role].after +
+      "</p></div>";
+    rolesList.appendChild(item);
+  });
+  if (!anyRoles) {
+    rolesList.innerHTML = '<p class="saved-empty">' + dict.favorites.empty_roles + "</p>";
+  }
+}
+
+function showFavorites() {
+  renderFavoritesScreen();
+  showScreen("screen-favorites");
+}
+
+document.getElementById("btn-to-favorites").addEventListener("click", showFavorites);
+document.getElementById("btn-favorites-back").addEventListener("click", () => showScreen("screen-home"));
+
 document.querySelectorAll(".game-row").forEach((row) => {
   row.addEventListener("click", () => selectGame(row.dataset.game));
 });
+
+
 
 document.getElementById("lang-toggle").addEventListener("click", toggleLanguage);
 document.getElementById("btn-to-home").addEventListener("click", () => showScreen("screen-home"));
