@@ -1,5 +1,5 @@
 // Bumped by +1 on every deploy so it's easy to confirm which version is live.
-const BUILD_NUMBER = 2;
+const BUILD_NUMBER = 3;
 
 // Translation content for the two supported languages.
 const translations = {
@@ -36,6 +36,7 @@ const translations = {
       next_finish: "finish check-in",
       save_this: "save this",
       saved: "saved",
+      note_placeholder: "when should someone say this to you? (optional)",
     },
     home: {
       header_title: "Today",
@@ -134,6 +135,12 @@ const translations = {
       empty_roles: "Nothing saved yet — tap the heart on a role reframe to keep it here.",
       coach_note: "In a real version, your coach would see this same list on their side — so they know which line to remind you of, and when.",
       back: "back to home",
+      custom_section: "your own lines",
+      add_custom: "add your own line",
+      custom_phase_label: "when is this for",
+      custom_text_placeholder: "write the line in your own words...",
+      save: "save",
+      empty_custom: "You haven't written any of your own lines yet.",
     },
     summary: {
       title: "Today's check-in complete",
@@ -189,6 +196,7 @@ const translations = {
       next_finish: "체크인 완료하기",
       save_this: "저장하기",
       saved: "저장됨",
+      note_placeholder: "언제 이 말을 들으면 좋을까요? (선택)",
     },
     home: {
       header_title: "오늘",
@@ -287,6 +295,12 @@ const translations = {
       empty_roles: "아직 저장한 역할 리프레임이 없어요 — 하트를 눌러 저장해보세요.",
       coach_note: "실제 버전에서는 코치도 같은 목록을 볼 수 있어서, 언제 어떤 문구로 상기시켜줘야 할지 알 수 있어요.",
       back: "홈으로 돌아가기",
+      custom_section: "내가 직접 쓴 문구",
+      add_custom: "내 문구 추가하기",
+      custom_phase_label: "언제 쓸 문구인가요",
+      custom_text_placeholder: "나만의 말로 문구를 적어보세요...",
+      save: "저장",
+      empty_custom: "아직 직접 작성한 문구가 없어요.",
     },
     summary: {
       title: "오늘의 체크인 완료",
@@ -339,6 +353,9 @@ function loadState() {
   // Fill in favorites for states saved before this feature existed.
   if (!s.favoriteSelfTalk) s.favoriteSelfTalk = { pre: [false, false, false], mid: [false, false, false], recovery: [false, false, false] };
   if (!s.favoriteRoles) s.favoriteRoles = {};
+  if (!s.favoriteSelfTalkNotes) s.favoriteSelfTalkNotes = { pre: ["", "", ""], mid: ["", "", ""], recovery: ["", "", ""] };
+  if (!s.favoriteRoleNotes) s.favoriteRoleNotes = {};
+  if (!s.customLines) s.customLines = [];
   return s;
 }
 
@@ -363,11 +380,19 @@ let currentStepIndex = 0;
 
 function applyTranslations() {
   const dict = translations[currentLang];
-  document.querySelectorAll("[data-i18n]").forEach((el) => {
-    const path = el.getAttribute("data-i18n").split(".");
+  const resolve = (key) => {
+    const path = key.split(".");
     let value = dict;
-    for (const key of path) value = value === undefined ? undefined : value[key];
+    for (const k of path) value = value === undefined ? undefined : value[k];
+    return value;
+  };
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const value = resolve(el.getAttribute("data-i18n"));
     if (value !== undefined) el.textContent = value;
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const value = resolve(el.getAttribute("data-i18n-placeholder"));
+    if (value !== undefined) el.placeholder = value;
   });
   document.documentElement.lang = currentLang === "ko" ? "ko" : "en";
   document.getElementById("build-number").textContent = " · build #" + BUILD_NUMBER;
@@ -391,10 +416,11 @@ function renderSelfTalkLine() {
   const lines = translations[currentLang].home.selftalk.lines[currentPhase];
   const idx = phaseLineIndex[currentPhase] % lines.length;
   document.getElementById("selftalk-line").textContent = lines[idx];
-  updateFavoriteButton(
-    document.getElementById("btn-favorite-selftalk"),
-    !!state.favoriteSelfTalk[currentPhase][idx]
-  );
+  const isFav = !!state.favoriteSelfTalk[currentPhase][idx];
+  updateFavoriteButton(document.getElementById("btn-favorite-selftalk"), isFav);
+  const noteWrap = document.getElementById("selftalk-note-wrap");
+  noteWrap.classList.toggle("hidden", !isFav);
+  document.getElementById("selftalk-note-input").value = state.favoriteSelfTalkNotes[currentPhase][idx] || "";
 }
 
 function updateFavoriteButton(btn, isActive) {
@@ -444,10 +470,12 @@ function displayRoleResult(roleKey) {
   document.getElementById("archetype-after").textContent = data.after;
   document.getElementById("archetype-result").classList.remove("hidden");
   document.getElementById("archetype-placeholder").classList.add("hidden");
-  updateFavoriteButton(
-    document.getElementById("btn-favorite-role"),
-    !!state.favoriteRoles[currentGame + ":" + roleKey]
-  );
+  const key = currentGame + ":" + roleKey;
+  const isFav = !!state.favoriteRoles[key];
+  updateFavoriteButton(document.getElementById("btn-favorite-role"), isFav);
+  const noteWrap = document.getElementById("role-note-wrap");
+  noteWrap.classList.toggle("hidden", !isFav);
+  document.getElementById("role-note-input").value = state.favoriteRoleNotes[key] || "";
 }
 
 function showRole(roleKey) {
@@ -615,6 +643,26 @@ document.getElementById("btn-favorite-role").addEventListener("click", () => {
   displayRoleResult(selectedRole);
 });
 
+document.getElementById("selftalk-note-input").addEventListener("input", (e) => {
+  const lines = translations[currentLang].home.selftalk.lines[currentPhase];
+  const idx = phaseLineIndex[currentPhase] % lines.length;
+  state.favoriteSelfTalkNotes[currentPhase][idx] = e.target.value;
+  saveState();
+});
+
+document.getElementById("role-note-input").addEventListener("input", (e) => {
+  if (!selectedRole) return;
+  const key = currentGame + ":" + selectedRole;
+  state.favoriteRoleNotes[key] = e.target.value;
+  saveState();
+});
+
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 function renderFavoritesScreen() {
   const dict = translations[currentLang];
   const phaseLabels = dict.home.selftalk.tabs;
@@ -627,14 +675,17 @@ function renderFavoritesScreen() {
     state.favoriteSelfTalk[phase].forEach((isFav, idx) => {
       if (!isFav) return;
       anySelfTalk = true;
+      const note = state.favoriteSelfTalkNotes[phase][idx];
       const item = document.createElement("div");
       item.className = "saved-item";
       item.innerHTML =
         '<i class="ti ti-heart-filled"></i><div class="saved-item-text"><p class="saved-item-tag">' +
-        phaseLabels[phase] +
+        escapeHtml(phaseLabels[phase]) +
         '</p><p class="saved-item-line">' +
-        lines[idx] +
-        "</p></div>";
+        escapeHtml(lines[idx]) +
+        "</p>" +
+        (note ? '<p class="saved-item-note"><i class="ti ti-corner-down-right"></i> ' + escapeHtml(note) + "</p>" : "") +
+        "</div>";
       selftalkList.appendChild(item);
     });
   });
@@ -651,20 +702,52 @@ function renderFavoritesScreen() {
     const gameData = dict.home.games[game];
     if (!gameData || !gameData.roles[role]) return;
     anyRoles = true;
+    const note = state.favoriteRoleNotes[key];
     const item = document.createElement("div");
     item.className = "saved-item";
     item.innerHTML =
       '<i class="ti ti-heart-filled"></i><div class="saved-item-text"><p class="saved-item-tag">' +
-      gameData.label +
+      escapeHtml(gameData.label) +
       " · " +
-      gameData.roles[role].name +
+      escapeHtml(gameData.roles[role].name) +
       '</p><p class="saved-item-line">' +
-      gameData.roles[role].after +
-      "</p></div>";
+      escapeHtml(gameData.roles[role].after) +
+      "</p>" +
+      (note ? '<p class="saved-item-note"><i class="ti ti-corner-down-right"></i> ' + escapeHtml(note) + "</p>" : "") +
+      "</div>";
     rolesList.appendChild(item);
   });
   if (!anyRoles) {
     rolesList.innerHTML = '<p class="saved-empty">' + dict.favorites.empty_roles + "</p>";
+  }
+
+  const customList = document.getElementById("favorites-custom-list");
+  customList.innerHTML = "";
+  if (state.customLines.length === 0) {
+    customList.innerHTML = '<p class="saved-empty">' + dict.favorites.empty_custom + "</p>";
+  } else {
+    state.customLines.forEach((entry, idx) => {
+      const item = document.createElement("div");
+      item.className = "saved-item";
+      item.innerHTML =
+        '<i class="ti ti-notebook"></i><div class="saved-item-text"><p class="saved-item-tag">' +
+        escapeHtml(phaseLabels[entry.phase] || entry.phase) +
+        '</p><p class="saved-item-line">' +
+        escapeHtml(entry.text) +
+        "</p>" +
+        (entry.note ? '<p class="saved-item-note"><i class="ti ti-corner-down-right"></i> ' + escapeHtml(entry.note) + "</p>" : "") +
+        "</div>";
+      const delBtn = document.createElement("button");
+      delBtn.className = "saved-item-delete";
+      delBtn.innerHTML = '<i class="ti ti-x"></i>';
+      delBtn.addEventListener("click", () => {
+        state.customLines.splice(idx, 1);
+        saveState();
+        renderFavoritesScreen();
+      });
+      item.appendChild(delBtn);
+      customList.appendChild(item);
+    });
   }
 }
 
@@ -675,6 +758,41 @@ function showFavorites() {
 
 document.getElementById("btn-to-favorites").addEventListener("click", showFavorites);
 document.getElementById("btn-favorites-back").addEventListener("click", () => showScreen("screen-home"));
+
+// --- journal: let the athlete write their own self-talk line from scratch ---
+let customLinePhase = "pre";
+
+document.getElementById("btn-add-custom").addEventListener("click", () => {
+  const form = document.getElementById("custom-line-form");
+  form.classList.toggle("hidden");
+  if (!form.classList.contains("hidden")) {
+    document.getElementById("custom-line-text").value = "";
+    document.getElementById("custom-line-note").value = "";
+    customLinePhase = "pre";
+    document.querySelectorAll("#custom-phase-tabs .phase-tab").forEach((t) => {
+      t.classList.toggle("selected", t.dataset.phase === "pre");
+    });
+    document.getElementById("custom-line-text").focus();
+  }
+});
+
+document.querySelectorAll("#custom-phase-tabs .phase-tab").forEach((tab) => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll("#custom-phase-tabs .phase-tab").forEach((t) => t.classList.remove("selected"));
+    tab.classList.add("selected");
+    customLinePhase = tab.dataset.phase;
+  });
+});
+
+document.getElementById("btn-save-custom").addEventListener("click", () => {
+  const text = document.getElementById("custom-line-text").value.trim();
+  if (!text) return;
+  const note = document.getElementById("custom-line-note").value.trim();
+  state.customLines.push({ phase: customLinePhase, text: text, note: note });
+  saveState();
+  document.getElementById("custom-line-form").classList.add("hidden");
+  renderFavoritesScreen();
+});
 
 document.querySelectorAll(".game-row").forEach((row) => {
   row.addEventListener("click", () => selectGame(row.dataset.game));
