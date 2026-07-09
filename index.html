@@ -111,7 +111,6 @@
       <div class="card panel-cut" style="margin-top:22px;">
         <div class="row-between" style="margin-bottom:8px;">
           <span class="section-label" style="margin:0;" data-i18n="home.community_label"></span>
-          <i class="ti ti-chevron-right muted-icon"></i>
         </div>
         <div class="leaderboard-row">
           <span class="lb-rank">1</span>
@@ -137,7 +136,10 @@
     <!-- SCREEN 3: guided check-in flow — one step at a time -->
     <section id="screen-flow" class="screen">
       <div class="flow-header">
-        <div class="flow-dots" id="flow-dots"></div>
+        <div class="flow-header-top">
+          <div class="flow-dots" id="flow-dots"></div>
+          <button class="icon-btn small" id="btn-flow-close" aria-label="close"><i class="ti ti-x"></i></button>
+        </div>
         <p class="flow-step-label" id="flow-step-label"></p>
       </div>
 
@@ -258,6 +260,7 @@
     <section id="screen-favorites" class="screen">
       <div class="hud-header panel-cut">
         <div class="row-gap">
+          <button class="icon-btn" id="btn-favorites-back-chevron" aria-label="back"><i class="ti ti-chevron-left"></i></button>
           <div class="icon-tile"><i class="ti ti-heart"></i></div>
           <div>
             <p class="title-sm" data-i18n="favorites.title"></p>
@@ -305,6 +308,10 @@
 
     <!-- SCREEN: quote card — turn a saved line into a shareable "wise saying" card -->
     <section id="screen-quotecard" class="screen">
+      <div class="simple-header">
+        <button class="icon-btn" id="btn-quotecard-back-chevron" aria-label="back"><i class="ti ti-chevron-left"></i></button>
+        <p class="title-sm" data-i18n="quotecard.header"></p>
+      </div>
       <div class="quote-card">
         <i class="ti ti-quote quote-mark"></i>
         <p class="quote-card-text" id="quotecard-text"></p>
@@ -389,6 +396,17 @@
       <button class="primary-button" id="btn-back-home"><i class="ti ti-home"></i> <span data-i18n="summary.back_home"></span></button>
       <button class="secondary-button full-width" id="btn-share" style="margin-top:8px;"><span data-i18n="summary.share_button"></span></button>
     </section>
+
+    <nav class="bottom-tabs" id="bottom-tabs">
+      <button class="tab-btn" data-target="screen-home">
+        <i class="ti ti-home"></i>
+        <span data-i18n="nav.home"></span>
+      </button>
+      <button class="tab-btn" data-target="screen-favorites">
+        <i class="ti ti-heart"></i>
+        <span data-i18n="nav.saved"></span>
+      </button>
+    </nav>
 
   </main>
 
