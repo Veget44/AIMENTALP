@@ -1,10 +1,11 @@
 // Bumped by +1 on every deploy so it's easy to confirm which version is live.
-const BUILD_NUMBER = 5;
+const BUILD_NUMBER = 6;
 
 // Translation content for the two supported languages.
 const translations = {
   en: {
     meta: { top_label: "concept prototype · live preview" },
+    nav: { home: "home", saved: "saved" },
     onboarding: {
       eyebrow: "step 1 of 1",
       title: "Build your training loop",
@@ -145,6 +146,7 @@ const translations = {
       wisdom_hint: "A few lines that have outlasted their authors by a long time.",
     },
     quotecard: {
+      header: "quote card",
       copy: "copy text",
       copied: "copied!",
     },
@@ -171,6 +173,7 @@ const translations = {
   },
   ko: {
     meta: { top_label: "컨셉 프로토타입 · 실시간 미리보기" },
+    nav: { home: "홈", saved: "저장됨" },
     onboarding: {
       eyebrow: "1단계 중 1단계",
       title: "나만의 훈련 루틴 만들기",
@@ -311,6 +314,7 @@ const translations = {
       wisdom_hint: "저자보다 훨씬 오래 살아남은 몇 줄의 말들.",
     },
     quotecard: {
+      header: "인용 카드",
       copy: "문구 복사하기",
       copied: "복사됨!",
     },
@@ -546,9 +550,18 @@ function toggleLanguage() {
   }
 }
 
+const TAB_SCREENS = ["screen-home", "screen-favorites"];
+
 function showScreen(id) {
   document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
+
+  const tabs = document.getElementById("bottom-tabs");
+  const onTabScreen = TAB_SCREENS.includes(id);
+  tabs.classList.toggle("visible", onTabScreen);
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.target === id);
+  });
 }
 
 // --- guided flow engine: one step visible at a time, with progress + nav ---
@@ -729,7 +742,7 @@ function renderFavoritesScreen() {
     });
   });
   if (!anySelfTalk) {
-    selftalkList.innerHTML = '<p class="saved-empty">' + dict.favorites.empty_selftalk + "</p>";
+    selftalkList.innerHTML = '<i class="ti ti-heart empty-icon"></i><p class="saved-empty">' + dict.favorites.empty_selftalk + "</p>";
   }
 
   const rolesList = document.getElementById("favorites-roles-list");
@@ -762,13 +775,13 @@ function renderFavoritesScreen() {
     rolesList.appendChild(item);
   });
   if (!anyRoles) {
-    rolesList.innerHTML = '<p class="saved-empty">' + dict.favorites.empty_roles + "</p>";
+    rolesList.innerHTML = '<i class="ti ti-heart empty-icon"></i><p class="saved-empty">' + dict.favorites.empty_roles + "</p>";
   }
 
   const customList = document.getElementById("favorites-custom-list");
   customList.innerHTML = "";
   if (state.customLines.length === 0) {
-    customList.innerHTML = '<p class="saved-empty">' + dict.favorites.empty_custom + "</p>";
+    customList.innerHTML = '<i class="ti ti-notebook empty-icon"></i><p class="saved-empty">' + dict.favorites.empty_custom + "</p>";
   } else {
     state.customLines.forEach((entry, idx) => {
       const item = document.createElement("div");
@@ -856,9 +869,21 @@ document.getElementById("btn-copy-quote").addEventListener("click", () => {
 });
 
 document.getElementById("btn-quotecard-back").addEventListener("click", showFavorites);
+document.getElementById("btn-quotecard-back-chevron").addEventListener("click", showFavorites);
 
 document.getElementById("btn-to-favorites").addEventListener("click", showFavorites);
 document.getElementById("btn-favorites-back").addEventListener("click", () => showScreen("screen-home"));
+document.getElementById("btn-favorites-back-chevron").addEventListener("click", () => showScreen("screen-home"));
+
+document.querySelectorAll(".tab-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    if (btn.dataset.target === "screen-favorites") {
+      showFavorites();
+    } else {
+      showScreen(btn.dataset.target);
+    }
+  });
+});
 
 // --- journal: let the athlete write their own self-talk line from scratch ---
 let customLinePhase = "pre";
@@ -906,6 +931,7 @@ document.getElementById("btn-to-home").addEventListener("click", () => showScree
 document.getElementById("btn-start-checkin").addEventListener("click", startCheckin);
 document.getElementById("btn-flow-next").addEventListener("click", goFlowNext);
 document.getElementById("btn-flow-back").addEventListener("click", goFlowBack);
+document.getElementById("btn-flow-close").addEventListener("click", () => showScreen("screen-home"));
 document.getElementById("btn-back-home").addEventListener("click", () => showScreen("screen-home"));
 document.getElementById("btn-share").addEventListener("click", () => showScreen("screen-home"));
 document.getElementById("btn-reset-demo").addEventListener("click", () => {
