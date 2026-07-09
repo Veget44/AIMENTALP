@@ -107,6 +107,60 @@ body {
   margin-bottom: 14px;
 }
 
+/* ---------- back buttons / simple headers ---------- */
+.icon-btn {
+  width: 34px; height: 34px; flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; cursor: pointer;
+}
+.icon-btn:hover { border-color: var(--sky); color: var(--sky); }
+.icon-btn.small { width: 28px; height: 28px; font-size: 14px; }
+
+.simple-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 18px;
+}
+.simple-header .title-sm { flex: 1; text-align: center; margin-right: 34px; }
+
+/* ---------- bottom tab bar (Home / Saved) ---------- */
+.bottom-tabs {
+  display: none;
+  gap: 8px;
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.bottom-tabs.visible { display: flex; }
+.tab-btn {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 8px 0 6px;
+  border: none; background: transparent;
+  color: var(--text-muted); font-family: var(--font-body); font-size: 10.5px;
+  cursor: pointer; border-radius: 10px;
+}
+.tab-btn i { font-size: 19px; }
+.tab-btn.active { color: var(--sage); }
+.tab-btn:hover { background: var(--surface-raised); }
+
+/* ---------- interaction polish ---------- */
+button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 2px;
+}
+.primary-button, .secondary-button, .game-row, .mood-tile, .archetype-chip,
+.option, .chip-tile, .icon-btn, .tab-btn, .phase-tab, .game-chip {
+  transition: transform 0.1s ease, filter 0.1s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+.primary-button:active { transform: scale(0.97); }
+.secondary-button:active, .game-row:active, .mood-tile:active, .archetype-chip:active { transform: scale(0.98); }
+
+.empty-icon { font-size: 20px; color: var(--border); display: block; margin: 0 auto 8px; text-align: center; }
+
 /* ---------- type ---------- */
 h1 {
   font-family: var(--font-display);
@@ -345,7 +399,8 @@ h1 {
 
 /* ---------- guided flow ---------- */
 .flow-header { margin-bottom: 20px; }
-.flow-dots { display: flex; gap: 5px; margin-bottom: 10px; }
+.flow-header-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.flow-dots { flex: 1; display: flex; gap: 5px; }
 .flow-dots span { flex: 1; height: 4px; background: var(--border); border-radius: 999px; }
 .flow-dots span.done { background: var(--sage); }
 .flow-dots span.current { background: var(--sky); }
